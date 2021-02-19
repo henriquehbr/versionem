@@ -1,4 +1,4 @@
-import { join } from 'path'
+import { join, basename } from 'path'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 
 import chalk from 'chalk'
@@ -10,7 +10,10 @@ const { log } = console
 export const updateChangelog = (commits, cwd, packageName, version) => {
   log(chalk`{blue Gathering changes...}`)
 
-  const title = `# ${packageName} changelog`
+  // TODO: Deduplicate this
+  const releaseOnCwd = packageName === basename(process.cwd())
+
+  const title = `# ${releaseOnCwd ? '' : `\`${packageName}\``} Changelog`
   const [date] = new Date().toISOString().split('T')
   const logPath = join(cwd, 'CHANGELOG.md')
 

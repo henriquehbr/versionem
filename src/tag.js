@@ -13,6 +13,7 @@ export const tag = async (cwd, packageName, version) => {
     return
   }
 
+  // TODO: Deduplicate this
   const releaseOnCwd = packageName === basename(process.cwd())
   const tagPrefix = releaseOnCwd ? '' : packageName + '-'
 

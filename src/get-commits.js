@@ -14,6 +14,7 @@ const reBreaking = new RegExp(`(${parserOptions.noteKeywords.join(')|(')})`)
 export const getCommits = async packageName => {
   log(chalk`{blue Gathering commits...}`)
 
+  // TODO: Deduplicate this
   const releaseOnCwd = packageName === basename(process.cwd())
   const tagPrefix = releaseOnCwd ? '' : packageName + '-'
 
