@@ -6,7 +6,7 @@ import { pathToFileURL } from 'url'
 
 import chalk from 'chalk'
 
-import { __dirname } from '../../utils/dirname'
+import { __dirname } from './dirname'
 import { getCommits } from './get-commits'
 import { getNewVersion } from './get-new-version'
 import { updatePackage } from './update-package'
