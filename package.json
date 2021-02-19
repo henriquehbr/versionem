@@ -5,7 +5,7 @@
   "author": "Henrique Borges",
   "license": "MIT",
   "scripts": {
-    "release": "node --no-warnings --experimental-specifier-resolution=node scripts/release"
+    "release": "node --no-warnings --experimental-specifier-resolution=node src"
   },
   "dependencies": {
     "chalk": "^4.1.0",
