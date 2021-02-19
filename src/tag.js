@@ -11,7 +11,10 @@ export const tag = async (cwd, packageName, version) => {
     return
   }
 
-  const tagName = `area51-semver-changelog-monorepo/${packageName}-v${version}`
+  const releaseOnCwd = packageName === basename(process.cwd())
+  const tagPrefix = releaseOnCwd ? '' : packageName + '-'
+
+  const tagName = `${tagPrefix}v${version}`
   log(chalk`\n{blue Tagging} {grey ${tagName}}`)
   await execa('git', ['tag', tagName], { cwd, stdio: 'inherit' })
 }

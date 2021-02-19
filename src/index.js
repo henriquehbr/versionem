@@ -1,12 +1,11 @@
 // Updated with 521d776
 // https://github.com/rollup/plugins/commit/521d7767c9ded5c054d72c174a2c65ebc816ccc6
 
-import { join, parse } from 'path'
+import { join, basename } from 'path'
 import { pathToFileURL } from 'url'
 
 import chalk from 'chalk'
 
-import { __dirname } from './dirname'
 import { getCommits } from './get-commits'
 import { getNewVersion } from './get-new-version'
 import { updatePackage } from './update-package'
@@ -20,7 +19,7 @@ const { log } = console
 
 try {
   const cwd = _[0] || process.cwd()
-  const { name: packageName } = parse(cwd)
+  const packageName = basename(cwd)
 
   // FIXME: Problematic on Windows, requires `pathToFileURL`
   const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
@@ -42,7 +41,7 @@ try {
   log(chalk`{blue New version}: ${newVersion}\n`)
   await updatePackage(cwd, packageJson, newVersion)
   // FIXME: probably `await` is not needed here
-  await updateChangelog(commits, cwd, packageName, newVersion)
+  updateChangelog(commits, cwd, packageName, newVersion)
   await commitChanges(cwd, packageName, newVersion)
   await tag(cwd, packageName, newVersion)
   await push()
