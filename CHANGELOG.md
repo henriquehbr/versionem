@@ -1,3 +1,13 @@
+#  Changelog
+
+## v0.1.1
+
+_2021-02-19_
+
+### Bugfixes
+
+- fix: conditionally add package name on changelog title (93f5255)
+
 # versionem changelog
 
 ## v0.1.0
