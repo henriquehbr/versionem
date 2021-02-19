@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "Henrique Borges",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "release": "node --no-warnings --experimental-specifier-resolution=node src"
   },
