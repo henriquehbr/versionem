@@ -3,5 +3,8 @@
   "version": "0.0.0",
   "main": "index.js",
   "author": "Henrique Borges",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "release": "node --no-warnings --experimental-specifier-resolution=node scripts/release"
+  }
 }
