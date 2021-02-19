@@ -1,6 +1,8 @@
 import chalk from 'chalk'
 import execa from 'execa'
 
+import { basename } from 'path'
+
 import { dryRun, noTag } from './cli'
 
 const { log } = console
