@@ -13,7 +13,7 @@ export const updateChangelog = (commits, cwd, packageName, version) => {
   // TODO: Deduplicate this
   const releaseOnCwd = packageName === basename(process.cwd())
 
-  const title = `# ${releaseOnCwd ? '' : `\`${packageName}\``} Changelog`
+  const title = `# ${releaseOnCwd ? 'Changelog' : `\`${packageName}\` changelog`}`
   const [date] = new Date().toISOString().split('T')
   const logPath = join(cwd, 'CHANGELOG.md')
 
