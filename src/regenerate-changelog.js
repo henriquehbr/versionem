@@ -1,3 +1,6 @@
+import { join } from 'path'
+import { unlinkSync } from 'fs'
+
 import chalk from 'chalk'
 
 const { log } = console
@@ -12,6 +15,8 @@ export const regenerateChangelog = async (cwd, packageName) => {
   const tags = await getGitTags(packageName)
 
   if (!tags.length) throw chalk`\n{red No Git tags found!}`
+
+  unlinkSync(join(cwd, 'CHANGELOG.md'))
 
   for (let [i, tag] of tags.entries()) {
     const toTag = tags[i + 1]
