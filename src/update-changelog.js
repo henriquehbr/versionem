@@ -13,7 +13,7 @@ export const updateChangelog = (commits, cwd, packageName, version) => {
   // TODO: Deduplicate this
   const releaseOnCwd = packageName === basename(process.cwd())
 
-  const title = `# ${releaseOnCwd ? '' : `\`${packageName}\``} Changelog`
+  const title = `# ${releaseOnCwd ? 'Changelog' : `\`${packageName}\` changelog`}`
   const [date] = new Date().toISOString().split('T')
   const logPath = join(cwd, 'CHANGELOG.md')
 
@@ -26,7 +26,9 @@ export const updateChangelog = (commits, cwd, packageName, version) => {
     // Maybe transform these in links leading to actual issues/commits
     const ref = /\(#\d+\)/.test(header) ? '' : ` (${hash.substring(0, 7)})`
     // Remove package name as it's redundant inside the package changelog
-    const message = header.trim().replace(`(${packageName})`, '') + ref
+    // Remove the commit type as it's redundant inside it's respective changelog section
+    const message = header.trim().replace(`(${packageName})`, '').replace(`${type}: `, '') + ref
+    log(message, type)
     if (breaking) notes.breaking.push(message)
     else if (type === 'fix') notes.fixes.push(message)
     else if (type === 'feat') notes.features.push(message)

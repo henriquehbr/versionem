@@ -12,8 +12,9 @@ import { updatePackage } from './update-package'
 import { updateChangelog } from './update-changelog'
 import { commitChanges } from './commit-changes'
 import { tag } from './tag'
+import { regenerateChangelog } from './regenerate-changelog'
 import { push } from './push'
-import { _, dryRun } from './cli'
+import { _, dryRun, regenChangelog } from './cli'
 
 const { log } = console
 
@@ -26,21 +27,22 @@ try {
 
   dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
 
+  regenChangelog && (await regenerateChangelog(cwd, packageName))
+
   log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
 
   const commits = await getCommits(packageName)
 
-  if (!commits.length) {
+  if (!commits.length)
     throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
-  }
 
   log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
   const newVersion = getNewVersion(packageJson.version, commits)
 
   log(chalk`{blue New version}: ${newVersion}\n`)
+
   await updatePackage(cwd, packageJson, newVersion)
-  // FIXME: probably `await` is not needed here
   updateChangelog(commits, cwd, packageName, newVersion)
   await commitChanges(cwd, packageName, newVersion)
   await tag(cwd, packageName, newVersion)
