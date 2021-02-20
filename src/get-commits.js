@@ -4,6 +4,8 @@ import chalk from 'chalk'
 import execa from 'execa'
 import parser from 'conventional-commits-parser'
 
+import { getGitTags } from './get-git-tags'
+
 const { log } = console
 const parserOptions = {
   noteKeywords: ['BREAKING CHANGE', 'Breaking change']
@@ -11,20 +13,21 @@ const parserOptions = {
 
 const reBreaking = new RegExp(`(${parserOptions.noteKeywords.join(')|(')})`)
 
-export const getCommits = async packageName => {
-  log(chalk`{blue Gathering commits...}`)
-
+export const getCommits = async (packageName, originTag) => {
   // TODO: Deduplicate this
   const releaseOnCwd = packageName === basename(process.cwd())
-  const tagPrefix = releaseOnCwd ? '' : packageName + '-'
 
-  let params = ['tag', '--list', `${tagPrefix}v*`, '--sort', '-v:refname']
-  const { stdout: tags } = await execa('git', params)
-  const [latestTag] = tags.split('\n')
+  const tags = await getGitTags(packageName)
 
-  log(chalk`{blue Last release tag:}`, latestTag)
+  const fromTag = originTag || tags.pop()
+  const toTag = originTag ? tags[tags.indexOf(originTag) + 1] : 'HEAD'
 
-  params = ['--no-pager', 'log', `${latestTag}..HEAD`, '--format=%B%n-hash-%n%H🐒💨🙊']
+  originTag
+    ? log(chalk`{blue Gathering commits between} {grey ${fromTag} and {grey ${toTag}}}`)
+    : log(chalk`{blue Gathering commits since} {grey ${fromTag}}`)
+
+  // NOTE: ~1 means to not include release commit
+  let params = ['--no-pager', 'log', `${fromTag}..${toTag}~1`, '--format=%B%n-hash-%n%H🐒💨🙊']
   const commitSubjectRegex = releaseOnCwd ? '' : `\\(${packageName}\\)`
   const commitRegex = new RegExp(`^[\\w\\!]+${commitSubjectRegex}`, 'i')
   const { stdout } = await execa('git', params)

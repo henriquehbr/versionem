@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import semver from 'semver'
 
 const { log } = console
+
 export const getNewVersion = (version, commits) => {
   log(chalk`{blue Determining new version}`)
   // TODO: Review
