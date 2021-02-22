@@ -12,7 +12,7 @@ export const tag = async ({ cwd, packageName, version, dryRun, noTag }) => {
   }
 
   // TODO: Deduplicate this
-  const isMonorepoPackage = basename(cwd)
+  const isMonorepoPackage = basename(cwd) === 'packages'
   const tagPrefix = isMonorepoPackage ? packageName + '-' : ''
 
   const tagName = `${tagPrefix}v${version}`
