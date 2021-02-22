@@ -18,35 +18,37 @@ import { _, dryRun, regenChangelog } from './cli'
 
 const { log } = console
 
-try {
-  const cwd = _[0] || process.cwd()
-  const packageName = basename(cwd)
-
-  // FIXME: Problematic on Windows, requires `pathToFileURL`
-  const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
-
-  dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
-
-  regenChangelog && (await regenerateChangelog(cwd, packageName))
-
-  log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
-
-  const commits = await getCommits(packageName)
-
-  if (!commits.length)
-    throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
-
-  log(chalk`{blue Found} {bold ${commits.length}} commits`)
-
-  const newVersion = getNewVersion(packageJson.version, commits)
-
-  log(chalk`{blue New version}: ${newVersion}\n`)
-
-  await updatePackage(cwd, packageJson, newVersion)
-  updateChangelog(commits, cwd, packageName, newVersion)
-  await commitChanges(cwd, packageName, newVersion)
-  await tag(cwd, packageName, newVersion)
-  await push()
-} catch (e) {
-  log(e)
+export const versionem = packagePath => {
+  try {
+    const cwd = packagePath || process.cwd()
+    const packageName = basename(cwd)
+  
+    // FIXME: Problematic on Windows, requires `pathToFileURL`
+    const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
+  
+    dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
+  
+    regenChangelog && (await regenerateChangelog(cwd, packageName))
+  
+    log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
+  
+    const commits = await getCommits(packageName)
+  
+    if (!commits.length)
+      throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
+  
+    log(chalk`{blue Found} {bold ${commits.length}} commits`)
+  
+    const newVersion = getNewVersion(packageJson.version, commits)
+  
+    log(chalk`{blue New version}: ${newVersion}\n`)
+  
+    await updatePackage(cwd, packageJson, newVersion)
+    updateChangelog(commits, cwd, packageName, newVersion)
+    await commitChanges(cwd, packageName, newVersion)
+    await tag(cwd, packageName, newVersion)
+    await push()
+  } catch (e) {
+    log(e)
+  }
 }

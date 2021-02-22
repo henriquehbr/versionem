@@ -6,8 +6,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "jest",
-    "release": "node --no-warnings --experimental-specifier-resolution=node src"
+    "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest",
+    "release": "node --no-warnings --experimental-specifier-resolution=node src/cli"
   },
   "dependencies": {
     "chalk": "^4.1.0",
