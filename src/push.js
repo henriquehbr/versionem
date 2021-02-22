@@ -1,11 +1,9 @@
 import execa from 'execa'
 import chalk from 'chalk'
 
-import { dryRun, noPush } from './cli'
-
 const { log } = console
 
-export const push = async () => {
+export const push = async ({ dryRun, noPush }) => {
   if (dryRun || noPush) {
     log(chalk`{yellow Skipping Git push}`)
     return

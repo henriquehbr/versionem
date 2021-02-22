@@ -1,11 +1,9 @@
 import chalk from 'chalk'
 import writePackage from 'write-pkg'
 
-import { dryRun } from './cli'
-
 const { log } = console
 
-export const updatePackage = async (cwd, pkg, version) => {
+export const updatePackage = async ({ cwd, pkg, version, dryRun }) => {
   if (dryRun) {
     log(chalk`{yellow Skipping package.json update}`)
     return

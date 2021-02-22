@@ -13,11 +13,12 @@ const parserOptions = {
 
 const reBreaking = new RegExp(`(${parserOptions.noteKeywords.join(')|(')})`)
 
-export const getCommits = async (packageName, originTag) => {
+export const getCommits = async ({ cwd, packageName, originTag }) => {
   // TODO: Deduplicate this
-  const releaseOnCwd = packageName === basename(process.cwd())
+  // TODO: replace `cwd` with `packagePath`
+  const isMonorepoPackage = basename(cwd) === 'packages'
 
-  const tags = await getGitTags(packageName)
+  const tags = await getGitTags({ cwd, packageName })
 
   const fromTag = originTag || tags.pop()
   const toTag = originTag ? tags[tags.indexOf(originTag) + 1] + '~1' : 'HEAD'
@@ -28,9 +29,9 @@ export const getCommits = async (packageName, originTag) => {
 
   // NOTE: ~1 means to not include release commit
   let params = ['--no-pager', 'log', `${fromTag}..${toTag}`, '--format=%B%n-hash-%n%H🐒💨🙊']
-  const commitSubjectRegex = releaseOnCwd ? '' : `\\(${packageName}\\)`
+  const commitSubjectRegex = isMonorepoPackage ? `\\(${packageName}\\)` : ''
   const commitRegex = new RegExp(`^[\\w\\!]+${commitSubjectRegex}`, 'i')
-  const { stdout } = await execa('git', params)
+  const { stdout } = await execa('git', params, { cwd })
   const commits = stdout
     .split('🐒💨🙊')
     .filter(commit => {

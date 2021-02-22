@@ -1,11 +1,9 @@
 import chalk from 'chalk'
 import execa from 'execa'
 
-import { dryRun } from './cli'
-
 const { log } = console
 
-export const commitChanges = async (cwd, packageName, version) => {
+export const commitChanges = async ({ cwd, packageName, version, dryRun }) => {
   if (dryRun) {
     log(chalk`{yellow Skipping Git commit}`)
     return
