@@ -1,3 +1,5 @@
+import { basename } from 'path'
+
 import chalk from 'chalk'
 import execa from 'execa'
 
@@ -10,9 +12,14 @@ export const commitChanges = async ({ cwd, packageName, version, dryRun }) => {
   }
 
   log(chalk`{blue Committing} CHANGELOG.md, package.json`)
+
+  // TODO: Deduplicate this
+  const isMonorepoPackage = basename(cwd) === 'packages'
+  const packagePrefix = isMonorepoPackage ? packageName + '-' : ''
+
   let params = ['add', cwd]
   await execa('git', params, { cwd })
 
-  params = ['commit', '-m', `chore(release): ${packageName} v${version}`]
+  params = ['commit', '-m', `chore(release): ${packagePrefix}v${version}`]
   await execa('git', params, { cwd })
 }
