@@ -10,6 +10,6 @@ export const push = async ({ dryRun, noPush }) => {
   }
 
   log(chalk`{blue Pushing release and tags}`)
-  await execa('git', ['push'])
-  await execa('git', ['push', '--tags'])
+  await execa('git', ['push'], { cwd })
+  await execa('git', ['push', '--tags'], { cwd })
 }

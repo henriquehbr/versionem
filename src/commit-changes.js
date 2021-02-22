@@ -11,8 +11,8 @@ export const commitChanges = async ({ cwd, packageName, version, dryRun }) => {
 
   log(chalk`{blue Committing} CHANGELOG.md, package.json`)
   let params = ['add', cwd]
-  await execa('git', params)
+  await execa('git', params, { cwd })
 
   params = ['commit', '-m', `chore(release): ${packageName} v${version}`]
-  await execa('git', params)
+  await execa('git', params, { cwd })
 }
