@@ -2,7 +2,7 @@ import { basename } from 'path'
 
 import execa from 'execa'
 
-export const getGitTags = async ({ cwd, packageName }) => {
+export const getTags = async ({ cwd, packageName }) => {
   // TODO: Deduplicate this
   const isMonorepoPackage = basename(cwd) === 'packages'
   const tagPrefix = isMonorepoPackage ? packageName + '-' : ''

@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import execa from 'execa'
 import parser from 'conventional-commits-parser'
 
-import { getGitTags } from './get-git-tags'
+import { getTags } from './get-tags'
 
 const { log } = console
 const parserOptions = {
@@ -18,7 +18,7 @@ export const getCommits = async ({ cwd, packageName, originTag }) => {
   // TODO: replace `cwd` with `packagePath`
   const isMonorepoPackage = basename(cwd) === 'packages'
 
-  const tags = await getGitTags({ cwd, packageName })
+  const tags = await getTags({ cwd, packageName })
 
   const fromTag = originTag || tags.pop()
   const toTag = originTag ? tags[tags.indexOf(originTag) + 1] + '~1' : 'HEAD'
