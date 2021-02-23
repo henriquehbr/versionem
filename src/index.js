@@ -21,24 +21,21 @@ const { log } = console
 export const versionem = async options => {
   try {
     const parsedOptions = await parseOptions(options)
+    const { dryRun, regenChangelog, packageName, cwd } = parsedOptions
 
     // FIXME: Problematic on Windows, requires `pathToFileURL`
-    const { default: packageJson } = await import(
-      pathToFileURL(join(parsedOptions.cwd, 'package.json'))
-    )
+    const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
 
-    parsedOptions.dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
+    dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
 
-    parsedOptions.regenChangelog && (await regenerateChangelog(options))
+    regenChangelog && (await regenerateChangelog(options))
 
-    log(
-      chalk`{cyan Publishing \`${parsedOptions.packageName}\`} from {grey packages/${parsedOptions.packageName}}`
-    )
+    log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
 
-    const commits = await getCommits({ packageName: parsedOptions.packageName, ...parsedOptions })
+    const commits = await getCommits({ packageName: packageName, ...parsedOptions })
 
     if (!commits.length)
-      throw chalk`\n{red No commits found!} did you mean to publish ${parsedOptions.packageName}?`
+      throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
 
     log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
