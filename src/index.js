@@ -35,7 +35,7 @@ export const versionem = async options => {
       chalk`{cyan Publishing \`${parsedOptions.packageName}\`} from {grey packages/${parsedOptions.packageName}}`
     )
 
-    const commits = await getCommits({ packageName: parsedOptions.packageName, ...options })
+    const commits = await getCommits({ packageName: parsedOptions.packageName, ...parsedOptions })
 
     if (!commits.length)
       throw chalk`\n{red No commits found!} did you mean to publish ${parsedOptions.packageName}?`
@@ -46,10 +46,10 @@ export const versionem = async options => {
 
     log(chalk`{blue New version}: ${newVersion}\n`)
 
-    await updatePackage({ packageJson, version: newVersion, ...options })
-    updateChangelog({ commits, version: newVersion, ...options })
-    await commitChanges({ version: newVersion, ...options })
-    await tag({ version: newVersion, ...options })
+    await updatePackage({ packageJson, version: newVersion, ...parsedOptions })
+    updateChangelog({ commits, version: newVersion, ...parsedOptions })
+    await commitChanges({ version: newVersion, ...parsedOptions })
+    await tag({ version: newVersion, ...parsedOptions })
     await push(options)
   } catch (e) {
     log(e)
