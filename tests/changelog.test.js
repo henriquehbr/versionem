@@ -19,7 +19,7 @@ beforeAll(async () => {
 
 describe('changelog', () => {
   test('single chore', async () => {
-    await versionem({ cwd: exampleRepo, noPush: true })
+    await versionem({ cwd: exampleRepo, noPush: true, silent: true })
 
     const changelogPath = join(exampleRepo, 'CHANGELOG.md')
     const changelogContent = readFileSync(changelogPath, 'utf-8')
