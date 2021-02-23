@@ -3,17 +3,15 @@ import { readFileSync, writeFileSync, existsSync } from 'fs'
 
 import chalk from 'chalk'
 
-import { dryRun } from './cli'
-
 const { log } = console
 
-export const updateChangelog = (commits, cwd, packageName, version) => {
+export const updateChangelog = ({ commits, cwd, packageName, version, dryRun }) => {
   log(chalk`{blue Gathering changes...}`)
 
   // TODO: Deduplicate this
-  const releaseOnCwd = packageName === basename(process.cwd())
+  const isMonorepoPackage = basename(cwd) === 'packages'
 
-  const title = `# ${releaseOnCwd ? 'Changelog' : `\`${packageName}\` changelog`}`
+  const title = `# ${isMonorepoPackage ? `\`${packageName}\` changelog` : 'Changelog'}`
   const [date] = new Date().toISOString().split('T')
   const logPath = join(cwd, 'CHANGELOG.md')
 
@@ -28,7 +26,6 @@ export const updateChangelog = (commits, cwd, packageName, version) => {
     // Remove package name as it's redundant inside the package changelog
     // Remove the commit type as it's redundant inside it's respective changelog section
     const message = header.trim().replace(`(${packageName})`, '').replace(`${type}: `, '') + ref
-    log(message, type)
     if (breaking) notes.breaking.push(message)
     else if (type === 'fix') notes.fixes.push(message)
     else if (type === 'feat') notes.features.push(message)

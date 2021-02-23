@@ -14,39 +14,44 @@ import { commitChanges } from './commit-changes'
 import { tag } from './tag'
 import { regenerateChangelog } from './regenerate-changelog'
 import { push } from './push'
-import { _, dryRun, regenChangelog } from './cli'
+import { parseOptions } from './parse-options'
 
 const { log } = console
 
-try {
-  const cwd = _[0] || process.cwd()
-  const packageName = basename(cwd)
+export const versionem = async options => {
+  try {
+    const parsedOptions = await parseOptions(options)
 
-  // FIXME: Problematic on Windows, requires `pathToFileURL`
-  const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
+    // FIXME: Problematic on Windows, requires `pathToFileURL`
+    const { default: packageJson } = await import(
+      pathToFileURL(join(parsedOptions.cwd, 'package.json'))
+    )
 
-  dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
+    parsedOptions.dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
 
-  regenChangelog && (await regenerateChangelog(cwd, packageName))
+    parsedOptions.regenChangelog && (await regenerateChangelog(options))
 
-  log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
+    log(
+      chalk`{cyan Publishing \`${parsedOptions.packageName}\`} from {grey packages/${parsedOptions.packageName}}`
+    )
 
-  const commits = await getCommits(packageName)
+    const commits = await getCommits({ packageName: parsedOptions.packageName, ...options })
 
-  if (!commits.length)
-    throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
+    if (!commits.length)
+      throw chalk`\n{red No commits found!} did you mean to publish ${parsedOptions.packageName}?`
 
-  log(chalk`{blue Found} {bold ${commits.length}} commits`)
+    log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
-  const newVersion = getNewVersion(packageJson.version, commits)
+    const newVersion = getNewVersion(packageJson.version, commits)
 
-  log(chalk`{blue New version}: ${newVersion}\n`)
+    log(chalk`{blue New version}: ${newVersion}\n`)
 
-  await updatePackage(cwd, packageJson, newVersion)
-  updateChangelog(commits, cwd, packageName, newVersion)
-  await commitChanges(cwd, packageName, newVersion)
-  await tag(cwd, packageName, newVersion)
-  await push()
-} catch (e) {
-  log(e)
+    await updatePackage({ packageJson, version: newVersion, ...options })
+    updateChangelog({ commits, version: newVersion, ...options })
+    await commitChanges({ version: newVersion, ...options })
+    await tag({ version: newVersion, ...options })
+    await push(options)
+  } catch (e) {
+    log(e)
+  }
 }

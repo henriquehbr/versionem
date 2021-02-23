@@ -5,14 +5,14 @@ import chalk from 'chalk'
 
 const { log } = console
 
-import { getGitTags } from './get-git-tags'
+import { getTags } from './get-tags'
 import { getCommits } from './get-commits'
 import { updateChangelog } from './update-changelog'
 
 export const regenerateChangelog = async (cwd, packageName) => {
   log(chalk`{magenta REGENERATE:} Changelog will be generated from scratch`)
 
-  const tags = await getGitTags(packageName)
+  const tags = await getTags(packageName)
 
   if (!tags.length) throw chalk`\n{red No Git tags found!}`
 

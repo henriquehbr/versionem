@@ -1,5 +1,7 @@
 import minimist from 'minimist'
 
-const { _, dryRun, noPush, noTag, regenChangelog } = minimist(process.argv.slice(2))
+import { versionem } from './index'
 
-export { _, dryRun, noPush, noTag, regenChangelog }
+const options = minimist(process.argv.slice(2))
+
+await versionem(options)
