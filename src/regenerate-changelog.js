@@ -9,8 +9,8 @@ import { getTags } from './get-tags'
 import { getCommits } from './get-commits'
 import { updateChangelog } from './update-changelog'
 
-export const regenerateChangelog = async ({ cwd, packageName }) => {
-  log(chalk`{magenta REGENERATE:} Changelog will be generated from scratch`)
+export const regenerateChangelog = async ({ cwd, packageName, silent }) => {
+  !silent && log(chalk`{magenta REGENERATE:} Changelog will be generated from scratch`)
 
   const tags = await getTags(packageName)
 
@@ -24,7 +24,7 @@ export const regenerateChangelog = async ({ cwd, packageName }) => {
     const [, version] = toTag.split('v')
     const commits = await getCommits(packageName, tag)
 
-    log(chalk`{blue Found} {bold ${commits.length}} commits`)
+    !silent && log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
     updateChangelog(commits, cwd, packageName, version)
   }

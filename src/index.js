@@ -21,27 +21,27 @@ const { log } = console
 export const versionem = async options => {
   try {
     const parsedOptions = await parseOptions(options)
-    const { dryRun, regenChangelog, packageName, cwd } = parsedOptions
+    const { dryRun, regenChangelog, silent, packageName, cwd } = parsedOptions
 
     // FIXME: Problematic on Windows, requires `pathToFileURL`
     const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
 
-    dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
+    !silent && dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
 
     regenChangelog && (await regenerateChangelog(options))
 
-    log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
+    !silent && log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
 
     const commits = await getCommits({ packageName: packageName, ...parsedOptions })
 
     if (!commits.length)
       throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
 
-    log(chalk`{blue Found} {bold ${commits.length}} commits`)
+    !silent && log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
-    const newVersion = getNewVersion(packageJson.version, commits)
+    const newVersion = getNewVersion({ version: packageJson.version, commits, ...parsedOptions })
 
-    log(chalk`{blue New version}: ${newVersion}\n`)
+    !silent && log(chalk`{blue New version}: ${newVersion}\n`)
 
     await updatePackage({ packageJson, version: newVersion, ...parsedOptions })
     updateChangelog({ commits, version: newVersion, ...parsedOptions })

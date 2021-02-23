@@ -5,8 +5,8 @@ import chalk from 'chalk'
 
 const { log } = console
 
-export const updateChangelog = ({ commits, cwd, packageName, version, dryRun }) => {
-  log(chalk`{blue Gathering changes...}`)
+export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, silent }) => {
+  !silent && log(chalk`{blue Gathering changes...}`)
 
   // TODO: Deduplicate this
   const isMonorepoPackage = basename(cwd) === 'packages'
@@ -45,11 +45,11 @@ export const updateChangelog = ({ commits, cwd, packageName, version, dryRun }) 
   const newLog = parts.join('\n\n')
 
   if (dryRun) {
-    log(chalk`{blue New changelog}:\n${newLog}`)
+    !silent && log(chalk`{blue New changelog}:\n${newLog}`)
     return
   }
 
-  log(chalk`{blue Updating} CHANGELOG.md`)
+  !silent && log(chalk`{blue Updating} CHANGELOG.md`)
   const content = [title, newLog, oldNotes].filter(Boolean).join('\n\n')
   writeFileSync(logPath, content, 'utf-8')
 }
