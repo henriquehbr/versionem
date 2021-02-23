@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.3.0
+
+_2021-02-23_
+
+### Bugfixes
+
+- commit and push changes on the correct cwd (3afe59a)
+
+### Features
+
+- expose index.js internals as a API (6b69b67)
+
+### Updates
+
+- rename `pkg` parameter to `packageJson` (bd4b3a3)
+- pass parsedOptions instead options as parameter (2c66e99)
+- Merge pull request #2 from henriquehbr/tests (3b2d6f8)
+- include cwd on push module parameters (3cf2337)
+- add "single chore commit" case (c595c6b)
+- conditionally include package name on release commit message (cb507bb)
+- include "example-repo" on .gitignore (fb3a43c)
+- rename `get-git-tags.js` to `get-tags.js` (def4426)
+- add missing validation for monorepo scenarios (74df463)
+- pass options object to every helper function (09df21a)
+- add "async" keyword to API entry function (6262174)
+- rename dirname export to "__dirname" (575fd8f)
+- setup bare-bones jest environment (efabab1)
+
 ## v0.2.0
 
 _2021-02-20_
