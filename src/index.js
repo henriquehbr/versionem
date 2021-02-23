@@ -1,7 +1,7 @@
 // Updated with 521d776
 // https://github.com/rollup/plugins/commit/521d7767c9ded5c054d72c174a2c65ebc816ccc6
 
-import { join, basename } from 'path'
+import { join } from 'path'
 import { pathToFileURL } from 'url'
 
 import chalk from 'chalk'
@@ -21,30 +21,27 @@ const { log } = console
 export const versionem = async options => {
   try {
     const parsedOptions = await parseOptions(options)
+    const { dryRun, regenChangelog, silent, packageName, cwd } = parsedOptions
 
     // FIXME: Problematic on Windows, requires `pathToFileURL`
-    const { default: packageJson } = await import(
-      pathToFileURL(join(parsedOptions.cwd, 'package.json'))
-    )
+    const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
 
-    parsedOptions.dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
+    !silent && dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
 
-    parsedOptions.regenChangelog && (await regenerateChangelog(options))
+    regenChangelog && (await regenerateChangelog(options))
 
-    log(
-      chalk`{cyan Publishing \`${parsedOptions.packageName}\`} from {grey packages/${parsedOptions.packageName}}`
-    )
+    !silent && log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
 
-    const commits = await getCommits({ packageName: parsedOptions.packageName, ...parsedOptions })
+    const commits = await getCommits({ packageName: packageName, ...parsedOptions })
 
     if (!commits.length)
-      throw chalk`\n{red No commits found!} did you mean to publish ${parsedOptions.packageName}?`
+      throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
 
-    log(chalk`{blue Found} {bold ${commits.length}} commits`)
+    !silent && log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
-    const newVersion = getNewVersion(packageJson.version, commits)
+    const newVersion = getNewVersion({ version: packageJson.version, commits, ...parsedOptions })
 
-    log(chalk`{blue New version}: ${newVersion}\n`)
+    !silent && log(chalk`{blue New version}: ${newVersion}\n`)
 
     await updatePackage({ packageJson, version: newVersion, ...parsedOptions })
     updateChangelog({ commits, version: newVersion, ...parsedOptions })

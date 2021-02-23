@@ -5,13 +5,13 @@ import execa from 'execa'
 
 const { log } = console
 
-export const commitChanges = async ({ cwd, packageName, version, dryRun }) => {
+export const commitChanges = async ({ cwd, packageName, version, dryRun, silent }) => {
   if (dryRun) {
-    log(chalk`{yellow Skipping Git commit}`)
+    !silent && log(chalk`{yellow Skipping Git commit}`)
     return
   }
 
-  log(chalk`{blue Committing} CHANGELOG.md, package.json`)
+  !silent && log(chalk`{blue Committing} CHANGELOG.md, package.json`)
 
   // TODO: Deduplicate this
   const isMonorepoPackage = basename(cwd) === 'packages'

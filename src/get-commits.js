@@ -13,7 +13,7 @@ const parserOptions = {
 
 const reBreaking = new RegExp(`(${parserOptions.noteKeywords.join(')|(')})`)
 
-export const getCommits = async ({ cwd, packageName, originTag }) => {
+export const getCommits = async ({ cwd, packageName, originTag, silent }) => {
   // TODO: Deduplicate this
   // TODO: replace `cwd` with `packagePath`
   const isMonorepoPackage = basename(cwd) === 'packages'
@@ -23,9 +23,10 @@ export const getCommits = async ({ cwd, packageName, originTag }) => {
   const fromTag = originTag || tags.pop()
   const toTag = originTag ? tags[tags.indexOf(originTag) + 1] + '~1' : 'HEAD'
 
-  originTag
-    ? log(chalk`{blue Gathering commits between} {grey ${fromTag} and {grey ${toTag}}}`)
-    : log(chalk`{blue Gathering commits since} {grey ${fromTag}}`)
+  !silent &&
+    (originTag
+      ? log(chalk`{blue Gathering commits between} {grey ${fromTag} and {grey ${toTag}}}`)
+      : log(chalk`{blue Gathering commits since} {grey ${fromTag}}`))
 
   // NOTE: ~1 means to not include release commit
   let params = ['--no-pager', 'log', `${fromTag}..${toTag}`, '--format=%B%n-hash-%n%H🐒💨🙊']
