@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest --silent",
+    "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest",
     "release": "node --no-warnings --experimental-specifier-resolution=node src/cli"
   },
   "dependencies": {
@@ -19,6 +19,8 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "outdent": "^0.8.0",
+    "rimraf": "^3.0.2"
   }
 }
