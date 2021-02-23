@@ -5,6 +5,7 @@
   "author": "Henrique Borges",
   "license": "MIT",
   "type": "module",
+  "bin": "./src/cli.js",
   "scripts": {
     "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest",
     "release": "node --no-warnings --experimental-specifier-resolution=node src/cli"
