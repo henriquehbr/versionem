@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.4.0
+
+_2021-02-23_
+
+### Bugfixes
+
+- convert regenerateChangelog parameters to object (cbea1ab)
+- force push git tags (36fb400)
+
+### Features
+
+- add --silent flag (7c5202a)
+
+### Updates
+
+- Merge pull request #3 from henriquehbr/feat/silent-mode (936b482)
+- set `silent: true` on versionem API call (bfb6818)
+- remove unused `basename` import from `path` (5ff657c)
+- use destructured parsedOptions properties (fb53234)
+
 ## v0.3.0
 
 _2021-02-23_
