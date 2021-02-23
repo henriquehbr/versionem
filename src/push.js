@@ -3,7 +3,7 @@ import chalk from 'chalk'
 
 const { log } = console
 
-export const push = async ({ dryRun, noPush }) => {
+export const push = async ({ cwd, dryRun, noPush }) => {
   if (dryRun || noPush) {
     log(chalk`{yellow Skipping Git push}`)
     return
