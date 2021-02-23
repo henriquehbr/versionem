@@ -3,14 +3,16 @@ import writePackage from 'write-pkg'
 
 const { log } = console
 
-export const updatePackage = async ({ cwd, pkg, version, dryRun }) => {
+export const updatePackage = async ({ cwd, packageJson, version, dryRun }) => {
   if (dryRun) {
     log(chalk`{yellow Skipping package.json update}`)
     return
   }
 
   log(chalk`{blue Updating} package.json`)
-  const pkgJson = Object.assign({}, pkg)
-  pkgJson.version = version
-  await writePackage(cwd, pkgJson)
+
+  // A copy is necessary to allow directly making modifications to `package.json`
+  const packageJsonCopy = Object.assign({}, packageJson)
+  packageJsonCopy.version = version
+  await writePackage(cwd, packageJsonCopy)
 }
