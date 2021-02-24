@@ -20,16 +20,27 @@ export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, si
   const notes = { breaking: [], fixes: [], features: [], updates: [] }
 
   for (const { breaking, hash, header, type } of commits) {
+    // Prevent the inclusion of commits without types (eg: merge commits)
+    if (!type) continue
+
     // Issues in commit message, like: (#1)
     // Maybe transform these in links leading to actual issues/commits
     const ref = /\(#\d+\)/.test(header) ? '' : ` (${hash.substring(0, 7)})`
+
     // Remove package name as it's redundant inside the package changelog
     // Remove the commit type as it's redundant inside it's respective changelog section
     const message = header.trim().replace(`(${packageName})`, '').replace(`${type}: `, '') + ref
+
     if (breaking) notes.breaking.push(message)
-    else if (type === 'fix') notes.fixes.push(message)
-    else if (type === 'feat') notes.features.push(message)
-    else notes.updates.push(message)
+
+    switch (type) {
+      case 'fix':
+        notes.fixes.push(message)
+      case 'feat':
+        notes.features.push(message)
+      default:
+        notes.updates.push(message)
+    }
   }
 
   const parts = [
