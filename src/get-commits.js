@@ -18,7 +18,7 @@ export const getCommits = async ({ cwd, packageName, originTag, silent }) => {
   // TODO: replace `cwd` with `packagePath`
   const isMonorepoPackage = basename(cwd) === 'packages'
 
-  const tags = await getTags({ cwd, packageName })
+  const tags = await getTags(cwd, packageName)
 
   const fromTag = originTag || tags.pop()
   const toTag = originTag ? tags[tags.indexOf(originTag) + 1] + '~1' : 'HEAD'
