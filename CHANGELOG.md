@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.4.1
+
+_2021-02-25_
+
+### Bugfixes
+
+- check for changelog existence pre-removal on regeneration (548253c)
+- pass parsedOptions to changelog regeneration (6c167bb)
+- ignore commits without type (eb8c265)
+
+### Updates
+
+- properly validate changelog existence on regeneration (d5ae697)
+- optimize commit type categorization logic (54a1d57)
+- setup husky (c588890)
+- add `bin` field to package.json (5404fe7)
+
 ## v0.4.0
 
 _2021-02-23_
