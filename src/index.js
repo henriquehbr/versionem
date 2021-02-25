@@ -28,7 +28,7 @@ export const versionem = async options => {
 
     !silent && dryRun && log(chalk`{magenta DRY RUN:} No files will be modified`)
 
-    regenChangelog && (await regenerateChangelog(options))
+    regenChangelog && (await regenerateChangelog(parsedOptions))
 
     !silent && log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
 
