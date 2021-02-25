@@ -16,7 +16,9 @@ export const regenerateChangelog = async ({ cwd, packageName, silent, dryRun }) 
 
   if (!tags.length) throw chalk`\n{red No Git tags found!}`
 
-  existsSync && unlinkSync(join(cwd, 'CHANGELOG.md'))
+  const logPath = join(cwd, 'CHANGELOG.md')
+
+  existsSync(logPath) && unlinkSync(logPath)
 
   for (let [i, tag] of tags.entries()) {
     const toTag = tags[i + 1]

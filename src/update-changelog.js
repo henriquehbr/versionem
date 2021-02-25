@@ -23,7 +23,6 @@ export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, si
   // TODO: load this from a external config
   const notes = {
     breakingChanges: {
-      prefix: 'docs',
       commits: []
     },
     features: {
