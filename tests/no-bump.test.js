@@ -11,13 +11,15 @@ import { versionem } from '../src/index'
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-const getLatestCommitHash = async cwd => {
-  const params = ['rev-parse', '--short', 'HEAD']
-  const { stdout: latestCommitHash } = await execa('git', params, { cwd })
-  return latestCommitHash
+const getPackageJsonVersion = async cwd => {
+  const packageJsonPath = join(cwd, 'package.json')
+  const {
+    default: { version }
+  } = await import(packageJsonPath)
+  return version
 }
 
-it('--no-commit flag works properly', async () => {
+it('--noBump flag works properly', async () => {
   existsSync(exampleRepoPath) && rimraf.sync(exampleRepoPath)
   await generateExampleRepo()
 
@@ -29,11 +31,11 @@ it('--no-commit flag works properly', async () => {
   params = ['commit', '-m', 'chore: add "Hello World!"']
   await execa('git', params, { cwd: exampleRepoPath })
 
-  const beforeCommitHash = await getLatestCommitHash(exampleRepoPath)
+  const beforeVersion = await getPackageJsonVersion(exampleRepoPath)
 
-  await versionem({ cwd: exampleRepoPath, noCommit: true, noPush: true, silent: true })
+  await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
-  const afterCommitHash = await getLatestCommitHash(exampleRepoPath)
+  const afterVersion = await getPackageJsonVersion(exampleRepoPath)
 
-  expect(beforeCommitHash).toBe(afterCommitHash)
+  expect(beforeVersion).toBe(afterVersion)
 })

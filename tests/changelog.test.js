@@ -12,12 +12,10 @@ import { versionem } from '../src/index'
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-beforeAll(async () => {
+it('Generates a single entry on "Updates" section', async () => {
   existsSync(exampleRepoPath) && rimraf.sync(exampleRepoPath)
   await generateExampleRepo()
-})
 
-it('Generates a single entry on "Updates" section', async () => {
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
 
   let params = ['add', '.']
