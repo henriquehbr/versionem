@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.7.0
+
+_2021-02-26_
+
+### Features
+
+- add --noLog flag (0b44fdf)
+
 ## v0.6.0
 
 _2021-02-26_
