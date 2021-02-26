@@ -17,29 +17,28 @@ beforeAll(async () => {
   await generateExampleRepo()
 })
 
-describe('changelog', () => {
-  test('single chore', async () => {
-    writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
+it('Generates a single entry on "Updates" section', async () => {
+  writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
 
-    let params = ['add', '.']
-    await execa('git', params, { cwd: exampleRepoPath })
+  let params = ['add', '.']
+  await execa('git', params, { cwd: exampleRepoPath })
 
-    params = ['commit', '-m', 'chore: add "Hello World!"']
-    await execa('git', params, { cwd: exampleRepoPath })
+  params = ['commit', '-m', 'chore: add "Hello World!"']
+  await execa('git', params, { cwd: exampleRepoPath })
 
-    await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
+  await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
-    const changelogPath = join(exampleRepoPath, 'CHANGELOG.md')
-    const changelogContent = readFileSync(changelogPath, 'utf-8')
+  const changelogPath = join(exampleRepoPath, 'CHANGELOG.md')
+  const changelogContent = readFileSync(changelogPath, 'utf-8')
 
-    /* Use last modified time instead actual date to avoid possible 1% edge cases conflicts where
+  /* Use last modified time instead actual date to avoid possible 1% edge cases conflicts where
     the changelog is generated exactly 23:59 and the tests are run at 00:00 */
-    const [lastModified] = statSync(changelogPath).mtime.toISOString().split('T')
+  const [lastModified] = statSync(changelogPath).mtime.toISOString().split('T')
 
-    params = ['rev-parse', '--short', 'v0.0.1~1']
-    const { stdout: latestCommitHash } = await execa('git', params, { cwd: exampleRepoPath })
+  params = ['rev-parse', '--short', 'v0.0.1~1']
+  const { stdout: latestCommitHash } = await execa('git', params, { cwd: exampleRepoPath })
 
-    const expectedChangelog = outdent`
+  const expectedChangelog = outdent`
       # Changelog
 
       ## v0.0.1
@@ -51,6 +50,5 @@ describe('changelog', () => {
       - add "Hello World!" (${latestCommitHash})
     `
 
-    expect(changelogContent).toBe(expectedChangelog)
-  })
+  expect(changelogContent).toBe(expectedChangelog)
 })
