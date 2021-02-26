@@ -36,6 +36,8 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
   - Run the whole release process without making a single modification to existing files nor creating new ones
 - `--noPush`
   - Prevent pushing to remote after release
+- `--noCommit`
+  - Prevent from making a release commit (implicitly includes `--noTag`)
 - `--noTag`
   - Don't tag the release commit
 - `--regenChangelog`
