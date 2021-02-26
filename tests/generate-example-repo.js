@@ -1,6 +1,7 @@
 import { join } from 'path'
 
 import execa from 'execa'
+import writePkg from 'write-pkg'
 
 import { dirname } from '../src/dirname'
 
@@ -12,8 +13,7 @@ export const generateExampleRepo = async () => {
   let params = ['init', cwd]
   await execa('git', params)
 
-  params = ['init', '-y']
-  await execa('yarn', params, { cwd })
+  writePkg(cwd, { name: 'example-repo', version: '0.0.0' })
 
   params = ['add', '.']
   await execa('git', params, { cwd })
