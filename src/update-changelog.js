@@ -6,7 +6,7 @@ import { sentenceCase } from 'sentence-case'
 
 const { log } = console
 
-export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, silent }) => {
+export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, noLog, silent }) => {
   !silent && log(chalk`{blue Gathering changes...}`)
 
   // TODO: Deduplicate this
@@ -74,7 +74,7 @@ export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, si
   // Divide sections with a line break
   const newLog = parts.join('\n\n')
 
-  if (dryRun) {
+  if (dryRun || noLog) {
     !silent && log(chalk`{blue New changelog}:\n${newLog}`)
     return
   }
