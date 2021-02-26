@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.6.0
+
+_2021-02-26_
+
+### Features
+
+- add --noBump flag (d6b982d)
+
 ## v0.5.0
 
 _2021-02-26_
