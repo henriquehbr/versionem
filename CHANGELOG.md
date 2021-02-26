@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.5.0
+
+_2021-02-26_
+
+### Features
+
+- add --noCommit flag (469361e)
+
 ## v0.4.1
 
 _2021-02-25_
