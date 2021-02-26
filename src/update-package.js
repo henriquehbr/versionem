@@ -3,8 +3,8 @@ import writePackage from 'write-pkg'
 
 const { log } = console
 
-export const updatePackage = async ({ cwd, packageJson, version, dryRun, silent }) => {
-  if (dryRun) {
+export const updatePackage = async ({ cwd, packageJson, version, dryRun, noBump, silent }) => {
+  if (dryRun || noBump) {
     !silent && log(chalk`{yellow Skipping package.json update}`)
     return
   }
