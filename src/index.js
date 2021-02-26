@@ -21,7 +21,7 @@ const { log } = console
 export const versionem = async options => {
   try {
     const parsedOptions = await parseOptions(options)
-    const { dryRun, regenChangelog, silent, packageName, cwd } = parsedOptions
+    const { dryRun, regenChangelog, publish, silent, packageName, cwd } = parsedOptions
 
     // FIXME: Problematic on Windows, requires `pathToFileURL`
     const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
@@ -30,7 +30,7 @@ export const versionem = async options => {
 
     regenChangelog && (await regenerateChangelog(parsedOptions))
 
-    !silent && log(chalk`{cyan Publishing \`${packageName}\`} from {grey packages/${packageName}}`)
+    !silent && log(chalk`{cyan Releasing \`${packageName}\`}`)
 
     const commits = await getCommits({ packageName: packageName, ...parsedOptions })
 
@@ -48,6 +48,7 @@ export const versionem = async options => {
     await commitChanges({ version: newVersion, ...parsedOptions })
     await tag({ version: newVersion, ...parsedOptions })
     await push(options)
+    publish && (await publish(options))
   } catch (e) {
     log(e)
   }

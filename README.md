@@ -32,6 +32,8 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
 
 ## Options
 
+- `--publish`
+  - Publishes the package to npm right after the release
 - `--dryRun`
   - Run the whole release process without making a single modification to existing files nor creating new ones
 - `--noPush`
