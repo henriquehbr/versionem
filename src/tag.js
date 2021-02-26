@@ -5,8 +5,8 @@ import { basename } from 'path'
 
 const { log } = console
 
-export const tag = async ({ cwd, packageName, version, dryRun, noTag, silent }) => {
-  if (dryRun || noTag) {
+export const tag = async ({ cwd, packageName, version, dryRun, noCommit, noTag, silent }) => {
+  if (dryRun || noTag || noCommit) {
     !silent && log(chalk`{yellow Skipping Git tag}`)
     return
   }
