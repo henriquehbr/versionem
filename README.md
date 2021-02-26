@@ -37,9 +37,11 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
 - `--noPush`
   - Prevent pushing to remote after release
 - `--noCommit`
-  - Prevent from making a release commit (implicitly includes `--noTag`)
+  - Prevent release commit (implicitly includes `--noTag`)
 - `--noTag`
-  - Don't tag the release commit
+  - Prevent release commit from being tagged
+- `--noBump`
+  - Prevent `package.json#version` field from being updated
 - `--regenChangelog`
   - Regenerate all changelogs entries from scratch (overwriting existing ones), useful for existing codebases migrating to `versionem`
 - `--silent`
