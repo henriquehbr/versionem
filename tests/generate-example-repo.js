@@ -1,4 +1,3 @@
-import { writeFile } from 'fs/promises'
 import { join } from 'path'
 
 import execa from 'execa'
@@ -26,13 +25,5 @@ export const generateExampleRepo = async () => {
   const { stdout: latestCommitHash } = await execa('git', params, { cwd })
 
   params = ['tag', 'v0.0.0', latestCommitHash]
-  await execa('git', params, { cwd })
-
-  writeFile(join(cwd, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
-
-  params = ['add', '.']
-  await execa('git', params, { cwd })
-
-  params = ['commit', '-m', 'chore: add "Hello World!"']
   await execa('git', params, { cwd })
 }
