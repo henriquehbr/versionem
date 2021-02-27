@@ -6,6 +6,9 @@
   "license": "MIT",
   "type": "module",
   "bin": "./src/cli.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "release": "node --no-warnings --experimental-specifier-resolution=node src/cli",
     "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest -i --verbose",
