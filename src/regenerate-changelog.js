@@ -13,7 +13,7 @@ import { updateChangelog } from './update-changelog'
 export const regenerateChangelog = async ({ cwd, packageName, silent, dryRun }) => {
   !silent && log(chalk`{magenta REGENERATE:} Changelog will be generated from scratch`)
 
-  const tags = await getTags(cwd, packageName)
+  const tags = await getTags({ cwd, packageName })
 
   if (!tags.length) throw chalk`\n{red No Git tags found!}`
 

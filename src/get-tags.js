@@ -2,8 +2,8 @@ import { basename } from 'path'
 
 import execa from 'execa'
 
-// TODO: transform this parameter into a object
-export const getTags = async (cwd, packageName) => {
+/** @type {import('../types/generic').Generic} */
+export const getTags = async ({ cwd, packageName }) => {
   // TODO: Deduplicate this
   const isMonorepoPackage = basename(cwd) === 'packages'
   const tagPrefix = isMonorepoPackage ? packageName + '-' : ''
