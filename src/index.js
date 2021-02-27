@@ -15,6 +15,7 @@ import { tag } from './tag'
 import { regenerateChangelog } from './regenerate-changelog'
 import { push } from './push'
 import { parseOptions } from './parse-options'
+import { publishNpm } from './publish-npm'
 
 const { log } = console
 
@@ -48,7 +49,7 @@ export const versionem = async options => {
     await commitChanges({ version: newVersion, ...parsedOptions })
     await tag({ version: newVersion, ...parsedOptions })
     await push(options)
-    publish && (await publish(options))
+    publish && (await publishNpm(options))
   } catch (e) {
     log(e)
   }

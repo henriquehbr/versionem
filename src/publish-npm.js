@@ -3,7 +3,7 @@ import execa from 'execa'
 
 const { log } = console
 
-export const publish = async ({ cwd, packageName, dryRun, silent }) => {
+export const publishNpm = async ({ cwd, packageName, dryRun, silent }) => {
   !silent &&
     log(
       chalk`${dryRun ? `{yellow Skipping npm publish}` : `{blue Publishing ${packageName} to npm}`}`
