@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.8.1
+
+_2021-02-27_
+
+### Bugfixes
+
+- set `shell: true` on `npm publish` options (1449b74)
+- pass `parsedOptions` instead `options` to `publishNpm` (16a8fb5)
+- import `publish-npm.js` module on `index.js` (82d5d4a)
+
+### Updates
+
+- add npm registry url to package.json (ddb5e4d)
+- inherit `npm publish` command output (e3ec8e0)
+
 ## v0.8.0
 
 _2021-02-27_
