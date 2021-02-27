@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.8.0
+
+_2021-02-27_
+
+### Features
+
+- add --publish flag (9120c25)
+
 ## v0.7.0
 
 _2021-02-26_
