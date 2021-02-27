@@ -9,5 +9,5 @@ export const publishNpm = async ({ cwd, packageName, dryRun, silent }) => {
       dryRun ? chalk`{yellow Skipping npm publish}` : chalk`{blue Publishing ${packageName} to npm}`
     )
   let params = ['publish', dryRun ? '--dry-run' : '']
-  await execa('npm', params, { cwd, stdio: 'inherit' })
+  await execa('npm', params, { cwd, stdio: 'inherit', shell: true })
 }
