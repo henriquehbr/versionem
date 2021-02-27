@@ -1,11 +1,24 @@
 {
   "name": "versionem",
   "version": "0.8.1",
+  "description": "Automated semantic versioning integrated to changelog generation",
+  "keywords": [
+    "semver",
+    "semantic-versioning",
+    "release-automation",
+    "changelog-generator",
+    "release-notes-generator"
+  ],
   "main": "index.js",
   "author": "Henrique Borges",
   "license": "MIT",
   "type": "module",
   "bin": "./src/cli.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/henriquehbr/versionem"
+  },
+  "files": ["src"],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
