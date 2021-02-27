@@ -49,7 +49,7 @@ export const versionem = async options => {
     await commitChanges({ version: newVersion, ...parsedOptions })
     await tag({ version: newVersion, ...parsedOptions })
     await push(options)
-    publish && (await publishNpm(options))
+    publish && (await publishNpm(parsedOptions))
   } catch (e) {
     log(e)
   }
