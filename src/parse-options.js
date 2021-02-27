@@ -1,5 +1,6 @@
 import { basename } from 'path'
 
+/** @type {import('../types/parse-options').ParseOptions} */
 export const parseOptions = options => {
   // Try retrieving from API parameter, then fallback to CLI flag, lastly get the cwd
   const cwd = options.cwd || options._?.[0] || process.cwd()

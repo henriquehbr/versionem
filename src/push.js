@@ -3,6 +3,7 @@ import chalk from 'chalk'
 
 const { log } = console
 
+/** @type {import('../types/generic').Generic} */
 export const push = async ({ cwd, dryRun, noPush, silent }) => {
   if (dryRun || noPush) {
     !silent && log(chalk`{yellow Skipping Git push}`)

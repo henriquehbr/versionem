@@ -13,6 +13,7 @@ const parserOptions = {
 
 const reBreaking = new RegExp(`(${parserOptions.noteKeywords.join(')|(')})`)
 
+/** @type {import('../types/generic').Generic} */
 export const getCommits = async ({ cwd, packageName, originTag, silent }) => {
   // TODO: Deduplicate this
   // TODO: replace `cwd` with `packagePath`

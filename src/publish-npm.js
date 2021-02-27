@@ -3,6 +3,7 @@ import execa from 'execa'
 
 const { log } = console
 
+/** @type {import('../types/generic').Generic} */
 export const publishNpm = async ({ cwd, packageName, dryRun, silent }) => {
   !silent &&
     log(
