@@ -1,7 +1,6 @@
-import { existsSync, writeFileSync } from 'fs'
+import { existsSync, writeFileSync, rmSync } from 'fs'
 import { join } from 'path'
 
-import rimraf from 'rimraf'
 import execa from 'execa'
 
 import { generateExampleRepo } from './generate-example-repo'
@@ -17,8 +16,8 @@ const getLatestCommitHash = async cwd => {
   return latestCommitHash
 }
 
-it('--no-commit flag works properly', async () => {
-  existsSync(exampleRepoPath) && rimraf.sync(exampleRepoPath)
+it('--noCommit flag works properly', async () => {
+  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')

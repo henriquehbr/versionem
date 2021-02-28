@@ -36,10 +36,12 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
   - Publishes the package to npm right after the release
 - `--dryRun`
   - Run the whole release process without making a single modification to existing files nor creating new ones
+- `--unreleased`
+  - Includes to changelog commits created before a release (implicitly includes both `--noCommit` and `--noBump`)
 - `--noPush`
   - Prevent pushing to remote after release
 - `--noCommit`
-  - Prevent release commit (implicitly includes `--noTag`)
+  - Prevent release commit (implicitly includes both `--noTag` and `--noPush`)
 - `--noLog`
   - Prevent changelog from being generated
 - `--noTag`

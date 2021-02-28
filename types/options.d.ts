@@ -3,6 +3,7 @@ import type { ParsedArgs } from 'minimist'
 type Parameters =
   | 'publish'
   | 'dryRun'
+  | 'unreleased'
   | 'noPush'
   | 'noCommit'
   | 'noLog'

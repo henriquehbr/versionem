@@ -10,7 +10,7 @@ const __dirname = dirname(import.meta.url)
 export const generateExampleRepo = async () => {
   const cwd = join(__dirname, 'example-repo')
 
-  let params = ['init', cwd]
+  let params = ['init', '--shared=0777', cwd]
   await execa('git', params)
 
   writePkg(cwd, { name: 'example-repo', version: '0.0.0' })

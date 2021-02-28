@@ -1,8 +1,7 @@
-import { existsSync, readFileSync, writeFileSync, statSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync, statSync, rmSync } from 'fs'
 import { join } from 'path'
 
 import outdent from 'outdent'
-import rimraf from 'rimraf'
 import execa from 'execa'
 
 import { generateExampleRepo } from './generate-example-repo'
@@ -13,7 +12,7 @@ const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
 it('Generates a single entry on "Updates" section', async () => {
-  existsSync(exampleRepoPath) && rimraf.sync(exampleRepoPath)
+  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
@@ -39,7 +38,7 @@ it('Generates a single entry on "Updates" section', async () => {
   const expectedChangelog = outdent`
       # Changelog
 
-      ## v0.0.1
+      ## 0.0.1
 
       _${lastModified}_
 
