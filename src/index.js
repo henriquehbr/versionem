@@ -22,7 +22,7 @@ const { log } = console
 export const versionem = async options => {
   try {
     const parsedOptions = await parseOptions(options)
-    const { dryRun, regenChangelog, publish, silent, packageName, cwd } = parsedOptions
+    const { dryRun, regenChangelog, unreleased, publish, silent, packageName, cwd } = parsedOptions
 
     // FIXME: Problematic on Windows, requires `pathToFileURL`
     const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
@@ -40,7 +40,9 @@ export const versionem = async options => {
 
     !silent && log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
-    const newVersion = getNewVersion({ version: packageJson.version, commits, ...parsedOptions })
+    const newVersion = unreleased
+      ? 'Unreleased'
+      : getNewVersion({ version: packageJson.version, commits, ...parsedOptions })
 
     !silent && log(chalk`{blue New version}: ${newVersion}\n`)
 

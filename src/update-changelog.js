@@ -70,8 +70,6 @@ export const updateChangelog = ({
     notes[category].commits.push(message)
   }
 
-  const releaseTitle = (unreleased ? '' : '## v') + version
-
   const releaseContent = Object.entries(notes)
     .filter(([, { commits }]) => commits.length)
     .map(([title, { commits }]) => {
@@ -81,7 +79,7 @@ export const updateChangelog = ({
     })
     .join('\n\n')
 
-  const parts = [releaseTitle, `_${date}_`, releaseContent]
+  const parts = [`## ${version}`, `_${date}_`, releaseContent]
 
   // Divide sections with a line break
   const newLog = parts.join('\n\n')
