@@ -15,9 +15,7 @@ it('--noCommit flag works properly', async () => {
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
 
-  await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
-
-  const beforeCommitHash = await getCommitHash({ cwd: exampleRepoPath })
+  const beforeCommitHash = await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, noCommit: true, noPush: true, silent: true })
 

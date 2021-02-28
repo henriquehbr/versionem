@@ -7,7 +7,6 @@ import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
 import { generateExampleRepo } from './utils/generate-example-repo'
 import { commit } from './utils/commit'
-import { getCommitHash } from './utils/get-commit-hash'
 
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
@@ -19,9 +18,7 @@ it('--unreleased flag works properly', async () => {
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
 
-  await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
-
-  const firstCommitHash = await getCommitHash({ cwd: exampleRepoPath })
+  const firstCommitHash = await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
@@ -31,9 +28,7 @@ it('--unreleased flag works properly', async () => {
 
   writeFileSync(join(exampleRepoPath, 'lipsum.js'), 'console.log("Lipsum!")\n', 'utf-8')
 
-  await commit('feat: add "Lipsum"', { cwd: exampleRepoPath })
-
-  const secondCommitHash = await getCommitHash({ cwd: exampleRepoPath })
+  const secondCommitHash = await commit('feat: add "Lipsum"', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
 

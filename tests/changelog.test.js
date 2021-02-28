@@ -17,7 +17,7 @@ it('Generates a single entry on "Updates" section', async () => {
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
 
-  await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
+  const commitHash = await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
@@ -28,8 +28,6 @@ it('Generates a single entry on "Updates" section', async () => {
     the changelog is generated exactly 23:59 and the tests are run at 00:00 */
   const [lastModified] = statSync(changelogPath).mtime.toISOString().split('T')
 
-  const commitBeforeReleaseHash = await getCommitHash({ ref: 'v0.0.1~1', cwd: exampleRepoPath })
-
   const expectedChangelog = outdent`
       # Changelog
 
@@ -39,7 +37,7 @@ it('Generates a single entry on "Updates" section', async () => {
 
       ### Updates
 
-      - add "Hello World!" (${commitBeforeReleaseHash})
+      - add "Hello World!" (${commitHash})
     `
 
   expect(changelogContent).toBe(expectedChangelog)

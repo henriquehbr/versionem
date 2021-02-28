@@ -7,7 +7,7 @@ import execa from 'execa'
  * @property {string} cwd - Directory to execute git commands
  */
 
-/** @type {(options: GetCommitHashOptions) => Promise<void>} */
+/** @type {(options: GetCommitHashOptions) => Promise<string>} */
 export const getCommitHash = async ({ ref = 'HEAD', short = true, cwd }) => {
   const execaOptions = { cwd }
 
