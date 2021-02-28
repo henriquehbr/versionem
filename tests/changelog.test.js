@@ -39,7 +39,7 @@ it('Generates a single entry on "Updates" section', async () => {
   const expectedChangelog = outdent`
       # Changelog
 
-      ## v0.0.1
+      ## 0.0.1
 
       _${lastModified}_
 
