@@ -17,9 +17,7 @@ it('--unreleased flag works properly', async () => {
   const changelogPath = join(exampleRepoPath, 'CHANGELOG.md')
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
-
-  const firstCommitHash = await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
-
+  const firstCommitHash = await commit('chore: hello world', { cwd: exampleRepoPath })
   await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
   /* Use last modified time instead actual date to avoid possible 1% edge cases conflicts where
@@ -27,8 +25,10 @@ it('--unreleased flag works properly', async () => {
   const [lastModified] = statSync(changelogPath).mtime.toISOString().split('T')
 
   writeFileSync(join(exampleRepoPath, 'lipsum.js'), 'console.log("Lipsum!")\n', 'utf-8')
+  const secondCommitHash = await commit('feat: lipsum', { cwd: exampleRepoPath })
 
-  const secondCommitHash = await commit('feat: add "Lipsum"', { cwd: exampleRepoPath })
+  writeFileSync(join(exampleRepoPath, 'foobar.js'), 'console.log("foobar")\n', 'utf-8')
+  const thirdCommitHash = await commit('fix: foobar', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
 
@@ -41,7 +41,11 @@ it('--unreleased flag works properly', async () => {
 
     ### Features
 
-    - add "Lipsum" (${secondCommitHash})
+    - lipsum (${secondCommitHash})
+
+    ### Bugfixes
+
+    - foobar (${thirdCommitHash})
 
     ## 0.0.1
 
@@ -49,7 +53,7 @@ it('--unreleased flag works properly', async () => {
 
     ### Updates
 
-    - add "Hello World!" (${firstCommitHash})
+    - hello world (${firstCommitHash})
   `
 
   expect(expectedChangelog).toBe(changelogContent)
