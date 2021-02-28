@@ -1,7 +1,7 @@
-import { existsSync, writeFileSync, rmSync } from 'fs'
+import { writeFileSync } from 'fs'
 import { join } from 'path'
 
-import { generateExampleRepo } from './generate-example-repo'
+import { generateExampleRepo } from './utils/generate-example-repo'
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
 import { commit } from './utils/commit'

@@ -1,9 +1,9 @@
 import { existsSync, writeFileSync, rmSync } from 'fs'
 import { join } from 'path'
 
-import { generateExampleRepo } from './generate-example-repo'
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
+import { generateExampleRepo } from './utils/generate-example-repo'
 import { commit } from './utils/commit'
 
 const __dirname = dirname(import.meta.url)

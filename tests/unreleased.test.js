@@ -3,16 +3,15 @@ import { join } from 'path'
 
 import outdent from 'outdent'
 
-import { generateExampleRepo } from './generate-example-repo'
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
+import { generateExampleRepo } from './utils/generate-example-repo'
 import { commit } from './utils/commit'
 import { getCommitHash } from './utils/get-commit-hash'
 
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-// TODO: create commit util for testing purposes that returns the hash
 it('--unreleased flag works properly', async () => {
   await generateExampleRepo()
 

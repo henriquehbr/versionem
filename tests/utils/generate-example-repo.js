@@ -4,12 +4,12 @@ import { join } from 'path'
 import execa from 'execa'
 import writePkg from 'write-pkg'
 
-import { dirname } from '../src/dirname'
+import { dirname } from '../../src/dirname'
 
 const __dirname = dirname(import.meta.url)
 
 export const generateExampleRepo = async () => {
-  const exampleRepoPath = join(__dirname, 'example-repo')
+  const exampleRepoPath = join(__dirname, '..', 'example-repo')
   existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
 
   let params = ['init', '--shared=0777', exampleRepoPath]

@@ -3,9 +3,9 @@ import { join } from 'path'
 
 import outdent from 'outdent'
 
-import { generateExampleRepo } from './generate-example-repo'
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
+import { generateExampleRepo } from './utils/generate-example-repo'
 import { commit } from './utils/commit'
 import { getCommitHash } from './utils/get-commit-hash'
 
