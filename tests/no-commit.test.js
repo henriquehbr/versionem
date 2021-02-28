@@ -16,7 +16,7 @@ const getLatestCommitHash = async cwd => {
   return latestCommitHash
 }
 
-it('--no-commit flag works properly', async () => {
+it('--noCommit flag works properly', async () => {
   existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
