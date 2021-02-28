@@ -1,6 +1,9 @@
 import type { ParsedArgs } from 'minimist'
 
 type Parameters =
+  | 'major'
+  | 'minor'
+  | 'patch'
   | 'publish'
   | 'dryRun'
   | 'unreleased'

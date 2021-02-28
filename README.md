@@ -32,6 +32,12 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
 
 ## Options
 
+- `--major`
+  - Bumps major version number (x.0.0), equivalent of releasing a breaking change
+- `--minor`
+  - Bumps minor version number (0.x.0), equivalent of releasing a new feature
+- `--patch`
+  - Bumps patch version number (0.0.x), equivalent of releasing a bugfix
 - `--publish`
   - Publishes the package to npm right after the release
 - `--dryRun`
