@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.9.0
+
+_2021-02-28_
+
+### Features
+
+- add --unreleased flag (b28d54e)
+
+### Bugfixes
+
+- prevent `git push` when `--noCommit` is used (dc71849)
+
+### Updates
+
+- remove date from unreleased section on changelog (a511b8b)
+- remove `v` prefix from changelog versions (292a145)
+- skip `git tag` on --unreleased (4b1b70d)
+- convert `getTags` parameters to a single object (c3277ae)
+- add JSDoc type annotations (511538d)
+- add package.json metadata (9a73942)
+
 ## v0.8.1
 
 _2021-02-27_
