@@ -8,6 +8,7 @@ import { generateExampleRepo } from './generate-example-repo'
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
 import { commit } from './utils/commit'
+import { getCommitHash } from './utils/get-commit-hash'
 
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
@@ -24,8 +25,7 @@ it('--unreleased flag works properly', async () => {
 
   await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
 
-  let params = ['rev-parse', '--short', 'HEAD']
-  const { stdout: firstCommitHash } = await execa('git', params, { cwd: exampleRepoPath })
+  const firstCommitHash = await getCommitHash({ cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
@@ -37,8 +37,7 @@ it('--unreleased flag works properly', async () => {
 
   await commit('feat: add "Lipsum"', { cwd: exampleRepoPath })
 
-  params = ['rev-parse', '--short', 'HEAD']
-  const { stdout: secondCommitHash } = await execa('git', params, { cwd: exampleRepoPath })
+  const secondCommitHash = await getCommitHash({ cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
 
