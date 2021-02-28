@@ -13,8 +13,6 @@ const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
 it('Generates a single entry on "Updates" section', async () => {
-  // TODO: move this to `generateExampleRepo`
-  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')

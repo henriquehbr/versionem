@@ -19,8 +19,6 @@ const getPackageJsonVersion = async cwd => {
 }
 
 it('--noBump flag works properly', async () => {
-  // TODO: move this to `generateExampleRepo`
-  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')

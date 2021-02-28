@@ -1,7 +1,6 @@
-import { existsSync, writeFileSync, readFileSync, statSync, rmSync } from 'fs'
+import { writeFileSync, readFileSync, statSync } from 'fs'
 import { join } from 'path'
 
-import execa from 'execa'
 import outdent from 'outdent'
 
 import { generateExampleRepo } from './generate-example-repo'
@@ -15,8 +14,6 @@ const exampleRepoPath = join(__dirname, 'example-repo')
 
 // TODO: create commit util for testing purposes that returns the hash
 it('--unreleased flag works properly', async () => {
-  // TODO: move this to `generateExampleRepo`
-  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   const changelogPath = join(exampleRepoPath, 'CHANGELOG.md')

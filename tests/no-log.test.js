@@ -10,7 +10,6 @@ const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
 it('--noLog flag works properly', async () => {
-  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
