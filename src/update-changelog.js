@@ -6,6 +6,7 @@ import { sentenceCase } from 'sentence-case'
 
 const { log } = console
 
+/** @type {import('../types/generic').Generic} */
 export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, noLog, silent }) => {
   !silent && log(chalk`{blue Gathering changes...}`)
 

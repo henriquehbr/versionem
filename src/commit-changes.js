@@ -5,6 +5,7 @@ import execa from 'execa'
 
 const { log } = console
 
+/** @type {import('../types/generic').Generic} */
 export const commitChanges = async ({ cwd, packageName, version, dryRun, noCommit, silent }) => {
   if (dryRun || noCommit) {
     !silent && log(chalk`{yellow Skipping Git commit}`)

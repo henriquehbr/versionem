@@ -13,12 +13,13 @@ const parserOptions = {
 
 const reBreaking = new RegExp(`(${parserOptions.noteKeywords.join(')|(')})`)
 
+/** @type {import('../types/generic').Generic} */
 export const getCommits = async ({ cwd, packageName, originTag, silent }) => {
   // TODO: Deduplicate this
   // TODO: replace `cwd` with `packagePath`
   const isMonorepoPackage = basename(cwd) === 'packages'
 
-  const tags = await getTags(cwd, packageName)
+  const tags = await getTags({ cwd, packageName })
 
   const fromTag = originTag || tags.pop()
   const toTag = originTag ? tags[tags.indexOf(originTag) + 1] + '~1' : 'HEAD'

@@ -5,6 +5,7 @@ import { basename } from 'path'
 
 const { log } = console
 
+/** @type {import('../types/generic').Generic} */
 export const tag = async ({ cwd, packageName, version, dryRun, noCommit, noTag, silent }) => {
   if (dryRun || noTag || noCommit) {
     !silent && log(chalk`{yellow Skipping Git tag}`)
