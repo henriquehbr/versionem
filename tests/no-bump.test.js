@@ -1,5 +1,7 @@
-import { existsSync, writeFileSync, rmSync } from 'fs'
+import { writeFileSync } from 'fs'
 import { join } from 'path'
+
+import readPkg from 'read-pkg'
 
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
@@ -9,15 +11,6 @@ import { commit } from './utils/commit'
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-// TODO: replace this with `read-pkg`
-const getPackageJsonVersion = async cwd => {
-  const packageJsonPath = join(cwd, 'package.json')
-  const {
-    default: { version }
-  } = await import(packageJsonPath)
-  return version
-}
-
 it('--noBump flag works properly', async () => {
   await generateExampleRepo()
 
@@ -25,11 +18,11 @@ it('--noBump flag works properly', async () => {
 
   await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
 
-  const beforeVersion = await getPackageJsonVersion(exampleRepoPath)
+  const { version: beforeVersion } = await readPkg({ cwd: exampleRepoPath, normalize: false })
 
-  await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
+  await versionem({ cwd: exampleRepoPath, noBump: true, noPush: true, silent: true })
 
-  const afterVersion = await getPackageJsonVersion(exampleRepoPath)
+  const { version: afterVersion } = await readPkg({ cwd: exampleRepoPath, normalize: false })
 
   expect(beforeVersion).toBe(afterVersion)
 })
