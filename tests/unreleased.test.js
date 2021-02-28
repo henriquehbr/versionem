@@ -1,33 +1,24 @@
-import { existsSync, writeFileSync, readFileSync, statSync, rmSync } from 'fs'
+import { writeFileSync, readFileSync, statSync } from 'fs'
 import { join } from 'path'
 
-import execa from 'execa'
 import outdent from 'outdent'
 
-import { generateExampleRepo } from './generate-example-repo'
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
+import { generateExampleRepo } from './utils/generate-example-repo'
+import { commit } from './utils/commit'
 
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-// TODO: create commit util for testing purposes that returns the hash
 it('--unreleased flag works properly', async () => {
-  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   const changelogPath = join(exampleRepoPath, 'CHANGELOG.md')
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
 
-  let params = ['add', '.']
-  await execa('git', params, { cwd: exampleRepoPath })
-
-  params = ['commit', '-m', 'chore: add "Hello World!"']
-  await execa('git', params, { cwd: exampleRepoPath })
-
-  params = ['rev-parse', '--short', 'HEAD']
-  const { stdout: firstCommitHash } = await execa('git', params, { cwd: exampleRepoPath })
+  const firstCommitHash = await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
@@ -37,14 +28,7 @@ it('--unreleased flag works properly', async () => {
 
   writeFileSync(join(exampleRepoPath, 'lipsum.js'), 'console.log("Lipsum!")\n', 'utf-8')
 
-  params = ['add', '.']
-  await execa('git', params, { cwd: exampleRepoPath })
-
-  params = ['commit', '-m', 'feat: add "Lipsum"']
-  await execa('git', params, { cwd: exampleRepoPath })
-
-  params = ['rev-parse', '--short', 'HEAD']
-  const { stdout: secondCommitHash } = await execa('git', params, { cwd: exampleRepoPath })
+  const secondCommitHash = await commit('feat: add "Lipsum"', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
 

@@ -2,26 +2,22 @@ import { existsSync, readFileSync, writeFileSync, statSync, rmSync } from 'fs'
 import { join } from 'path'
 
 import outdent from 'outdent'
-import execa from 'execa'
 
-import { generateExampleRepo } from './generate-example-repo'
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
+import { generateExampleRepo } from './utils/generate-example-repo'
+import { commit } from './utils/commit'
+import { getCommitHash } from './utils/get-commit-hash'
 
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
 it('Generates a single entry on "Updates" section', async () => {
-  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
 
-  let params = ['add', '.']
-  await execa('git', params, { cwd: exampleRepoPath })
-
-  params = ['commit', '-m', 'chore: add "Hello World!"']
-  await execa('git', params, { cwd: exampleRepoPath })
+  const commitHash = await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
@@ -32,9 +28,6 @@ it('Generates a single entry on "Updates" section', async () => {
     the changelog is generated exactly 23:59 and the tests are run at 00:00 */
   const [lastModified] = statSync(changelogPath).mtime.toISOString().split('T')
 
-  params = ['rev-parse', '--short', 'v0.0.1~1']
-  const { stdout: latestCommitHash } = await execa('git', params, { cwd: exampleRepoPath })
-
   const expectedChangelog = outdent`
       # Changelog
 
@@ -44,7 +37,7 @@ it('Generates a single entry on "Updates" section', async () => {
 
       ### Updates
 
-      - add "Hello World!" (${latestCommitHash})
+      - add "Hello World!" (${commitHash})
     `
 
   expect(changelogContent).toBe(expectedChangelog)
