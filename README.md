@@ -39,7 +39,7 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
 - `--noPush`
   - Prevent pushing to remote after release
 - `--noCommit`
-  - Prevent release commit (implicitly includes `--noTag`)
+  - Prevent release commit (implicitly includes both `--noTag` and `--noPush`)
 - `--noLog`
   - Prevent changelog from being generated
 - `--noTag`
