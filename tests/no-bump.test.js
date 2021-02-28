@@ -1,15 +1,15 @@
 import { existsSync, writeFileSync, rmSync } from 'fs'
 import { join } from 'path'
 
-import execa from 'execa'
-
 import { generateExampleRepo } from './generate-example-repo'
 import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
+import { commit } from './utils/commit'
 
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
+// TODO: replace this with `read-pkg`
 const getPackageJsonVersion = async cwd => {
   const packageJsonPath = join(cwd, 'package.json')
   const {
@@ -19,16 +19,13 @@ const getPackageJsonVersion = async cwd => {
 }
 
 it('--noBump flag works properly', async () => {
+  // TODO: move this to `generateExampleRepo`
   existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
 
-  let params = ['add', '.']
-  await execa('git', params, { cwd: exampleRepoPath })
-
-  params = ['commit', '-m', 'chore: add "Hello World!"']
-  await execa('git', params, { cwd: exampleRepoPath })
+  await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
 
   const beforeVersion = await getPackageJsonVersion(exampleRepoPath)
 
