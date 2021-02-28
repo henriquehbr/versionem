@@ -12,4 +12,6 @@ interface CustomParsedOptions extends ParsedOptions {
   originTag: string
 }
 
-export type Generic = (options: CustomParsedOptions) => Promise<void>
+type Generic = (options: CustomParsedOptions) => Promise<void>
+
+export { Generic }
