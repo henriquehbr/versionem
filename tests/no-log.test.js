@@ -10,7 +10,7 @@ import { versionem } from '../src/index'
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-it('--noBump flag works properly', async () => {
+it('--noLog flag works properly', async () => {
   existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
