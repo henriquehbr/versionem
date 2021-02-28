@@ -32,6 +32,9 @@ export const updateChangelog = ({
 
   // TODO: load this from a external config
   const notes = {
+    unreleased: {
+      commits: []
+    },
     breakingChanges: {
       commits: []
     },
@@ -79,7 +82,8 @@ export const updateChangelog = ({
     })
     .join('\n\n')
 
-  const parts = [`## ${version}`, `_${date}_`, releaseContent]
+  // TODO: make this more readable
+  const parts = [`## ${version}`, ...(unreleased ? [] : [`_${date}_`]), releaseContent]
 
   // Divide sections with a line break
   const newLog = parts.join('\n\n')
