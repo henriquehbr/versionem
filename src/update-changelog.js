@@ -7,7 +7,16 @@ import { sentenceCase } from 'sentence-case'
 const { log } = console
 
 /** @type {import('../types/generic').Generic} */
-export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, noLog, silent }) => {
+export const updateChangelog = ({
+  commits,
+  cwd,
+  unreleased,
+  packageName,
+  version,
+  dryRun,
+  noLog,
+  silent
+}) => {
   !silent && log(chalk`{blue Gathering changes...}`)
 
   // TODO: Deduplicate this
@@ -61,7 +70,9 @@ export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, no
     notes[category].commits.push(message)
   }
 
-  const categorizedCommits = Object.entries(notes)
+  const releaseTitle = (unreleased ? '' : '## v') + version
+
+  const releaseContent = Object.entries(notes)
     .filter(([, { commits }]) => commits.length)
     .map(([title, { commits }]) => {
       const formattedTitle = `### ${sentenceCase(title)}\n\n`
@@ -70,7 +81,7 @@ export const updateChangelog = ({ commits, cwd, packageName, version, dryRun, no
     })
     .join('\n\n')
 
-  const parts = [`## v${version}`, `_${date}_`, categorizedCommits]
+  const parts = [releaseTitle, `_${date}_`, releaseContent]
 
   // Divide sections with a line break
   const newLog = parts.join('\n\n')

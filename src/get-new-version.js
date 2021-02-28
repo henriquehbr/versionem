@@ -4,8 +4,11 @@ import semver from 'semver'
 const { log } = console
 
 /** @type {import('../types/generic').Generic} */
-export const getNewVersion = ({ version, commits, silent }) => {
+export const getNewVersion = ({ version, commits, unreleased, silent }) => {
   !silent && log(chalk`{blue Determining new version}`)
+
+  if (unreleased) return 'Unreleased'
+
   // TODO: Review
   const intersection = process.argv.filter(arg => ['--major', '--minor', '--patch'].includes(arg))
   if (intersection.length) return semver.inc(version, intersection[0].substring(2))

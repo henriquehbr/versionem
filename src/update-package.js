@@ -4,8 +4,16 @@ import writePackage from 'write-pkg'
 const { log } = console
 
 /** @type {import('../types/generic').Generic} */
-export const updatePackage = async ({ cwd, packageJson, version, dryRun, noBump, silent }) => {
-  if (dryRun || noBump) {
+export const updatePackage = async ({
+  cwd,
+  packageJson,
+  unreleased,
+  version,
+  dryRun,
+  noBump,
+  silent
+}) => {
+  if (dryRun || unreleased || noBump) {
     !silent && log(chalk`{yellow Skipping package.json update}`)
     return
   }
