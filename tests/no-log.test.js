@@ -1,7 +1,6 @@
-import { existsSync, writeFileSync } from 'fs'
+import { existsSync, writeFileSync, rmSync } from 'fs'
 import { join } from 'path'
 
-import rimraf from 'rimraf'
 import execa from 'execa'
 
 import { generateExampleRepo } from './generate-example-repo'
@@ -12,7 +11,7 @@ const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
 it('--noBump flag works properly', async () => {
-  existsSync(exampleRepoPath) && rimraf.sync(exampleRepoPath)
+  existsSync(exampleRepoPath) && rmSync(exampleRepoPath, { recursive: true, force: true })
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
