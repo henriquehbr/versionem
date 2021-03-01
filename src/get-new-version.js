@@ -4,12 +4,12 @@ import semver from 'semver'
 const { log } = console
 
 /** @type {import('../types/generic').Generic} */
-export const getNewVersion = ({ version, commits, silent }) => {
+export const getNewVersion = ({ version, major, minor, patch, commits, silent }) => {
   !silent && log(chalk`{blue Determining new version}`)
 
-  // TODO: Review
-  const intersection = process.argv.filter(arg => ['--major', '--minor', '--patch'].includes(arg))
-  if (intersection.length) return semver.inc(version, intersection[0].substring(2))
+  const increment = major ? 'major' : minor ? 'minor' : patch && 'patch'
+
+  if (increment) return semver.inc(version, increment)
 
   const types = new Set(commits.map(({ type }) => type))
   const breaking = commits.some(commit => !!commit.breaking)
