@@ -15,7 +15,7 @@ export const commitChanges = async ({
   noCommit,
   silent
 }) => {
-  if (dryRun || unreleased || noCommit) {
+  if (dryRun || noCommit) {
     !silent && log(chalk`{yellow Skipping Git commit}`)
     return
   }
@@ -26,9 +26,15 @@ export const commitChanges = async ({
   const isMonorepoPackage = basename(cwd) === 'packages'
   const packagePrefix = isMonorepoPackage ? packageName + '-' : ''
 
-  let params = ['add', cwd]
+  let params = ['add', '.']
   await execa('git', params, { cwd })
 
-  params = ['commit', '-m', `chore(release): ${packagePrefix}v${version}`]
-  await execa('git', params, { cwd })
+  params = [
+    'commit',
+    ...(unreleased
+      ? ['--amend', '--no-edit', '--no-verify']
+      : ['-m', `chore(release): ${packagePrefix}v${version}`])
+  ]
+
+  await execa('git', params, { cwd, extendEnv: false, env: { HUSKY: 0 } })
 }
