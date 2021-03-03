@@ -3,11 +3,12 @@ import { readFileSync, writeFileSync, existsSync } from 'fs'
 
 import chalk from 'chalk'
 import { sentenceCase } from 'sentence-case'
+import execa from 'execa'
 
 const { log } = console
 
 /** @type {import('../types/generic').Generic} */
-export const updateChangelog = ({
+export const updateChangelog = async ({
   commits,
   cwd,
   unreleased,
@@ -28,7 +29,6 @@ export const updateChangelog = ({
 
   const logFile = existsSync(logPath) ? readFileSync(logPath, 'utf-8') : ''
   const oldNotes = logFile.startsWith(title) ? logFile.slice(title.length).trim() : logFile
-  //const notes = { breaking: [], fixes: [], features: [], updates: [] }
 
   // TODO: load this from a external config
   const notes = {
@@ -55,13 +55,18 @@ export const updateChangelog = ({
   // TODO: add flag to allow including all commit types
   const validCommitTypes = Object.values(notes).flatMap(({ prefix }) => prefix)
 
+  let params = ['rev-parse', 'HEAD']
+  const { stdout: latestCommitHash } = await execa('git', params, { cwd })
+
   for (const { breaking, hash, header, type } of commits) {
     // Prevent the inclusion of commits without types (eg: merge commits)
     if (!validCommitTypes.includes(type)) continue
 
+    const commitHash = unreleased && hash === latestCommitHash ? 'HEAD' : hash.substring(0, 7)
+
     // Issues in commit message, like: (#1)
     // Maybe transform these in links leading to actual issues/commits
-    const ref = /\(#\d+\)/.test(header) ? '' : ` (${hash.substring(0, 7)})`
+    const ref = /\(#\d+\)/.test(header) ? '' : ` (${commitHash})`
 
     // Remove package name as it's redundant inside the package changelog
     // Remove the commit type as it's redundant inside it's respective changelog section

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync, statSync, rmSync } from 'fs'
+import { readFileSync, writeFileSync, statSync } from 'fs'
 import { join } from 'path'
 
 import outdent from 'outdent'
@@ -7,7 +7,6 @@ import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
 import { generateExampleRepo } from './utils/generate-example-repo'
 import { commit } from './utils/commit'
-import { getCommitHash } from './utils/get-commit-hash'
 
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')

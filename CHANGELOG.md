@@ -9,6 +9,18 @@
 
 ### Updates
 
+- tag latest commit as HEAD instead it's hash (HEAD)
+- include unreleased commits on changelog (5da5c57)
+
+## Unreleased
+
+### Bugfixes
+
+- amend changes on last commit when using --unreleased (544f2c6)
+- get bump flags from parameters instead `process.argv` (65b6d57)
+
+### Updates
+
 - include unreleased commits on changelog (c3367fb)
 
 ## 0.9.1

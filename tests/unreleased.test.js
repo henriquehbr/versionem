@@ -28,7 +28,7 @@ it('--unreleased flag works properly', async () => {
   const secondCommitHash = await commit('feat: lipsum', { cwd: exampleRepoPath })
 
   writeFileSync(join(exampleRepoPath, 'foobar.js'), 'console.log("foobar")\n', 'utf-8')
-  const thirdCommitHash = await commit('fix: foobar', { cwd: exampleRepoPath })
+  await commit('fix: foobar', { cwd: exampleRepoPath })
 
   await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
 
@@ -45,7 +45,7 @@ it('--unreleased flag works properly', async () => {
 
     ### Bugfixes
 
-    - foobar (${thirdCommitHash})
+    - foobar (HEAD)
 
     ## 0.0.1
 
