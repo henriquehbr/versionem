@@ -1,11 +1,11 @@
 import outdent from 'outdent'
 import { sentenceCase } from 'sentence-case'
 
-export const formatChangelogEntry = notes => {
-  const formattedNotes = []
+export const formatChangelogEntry = ({ unreleased, version, categorizedCommits }) => {
+  const formattedChangelogEntry = []
 
-  for (const category in notes) {
-    const { commits } = notes[category]
+  for (const category in categorizedCommits) {
+    const { commits } = categorizedCommits[category]
 
     if (!commits.length) continue
 
@@ -14,8 +14,16 @@ export const formatChangelogEntry = notes => {
 
       - ${commits.join('\n- ').trim()}
     `
-    formattedNotes.push(formattedNote)
+    formattedChangelogEntry.push(formattedNote)
   }
 
-  return formattedNotes.join('\n\n')
+  if (!unreleased) {
+    const [date] = new Date().toISOString().split('T')
+    formattedChangelogEntry.unshift(`_${date}_`)
+  }
+
+  formattedChangelogEntry.unshift(`## ${version}`)
+
+  // Divide sections with a line break
+  return formattedChangelogEntry.join('\n\n')
 }

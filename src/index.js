@@ -46,8 +46,8 @@ export const versionem = async options => {
 
     !silent && log(chalk`{blue New version}: ${newVersion}\n`)
 
-    await updatePackage({ packageJson, version: newVersion, ...parsedOptions })
     await updateChangelog({ commits, version: newVersion, ...parsedOptions })
+    await updatePackage({ packageJson, version: newVersion, ...parsedOptions })
     await commitChanges({ version: newVersion, ...parsedOptions })
     await tag({ version: newVersion, ...parsedOptions })
     await push(options)

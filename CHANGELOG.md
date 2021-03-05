@@ -4,7 +4,8 @@
 
 ### Updates
 
-- modularize changelog entry formatter (HEAD)
+- modularize commit categorization and changelog formatting (HEAD)
+- modularize changelog entry formatter (86a98dd)
 
 ## 0.9.2
 
