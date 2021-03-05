@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Updates
+
+- modularize changelog entry formatter (HEAD)
+
 ## 0.9.2
 
 _2021-03-05_

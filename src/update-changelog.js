@@ -2,8 +2,9 @@ import { join, basename } from 'path'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 
 import chalk from 'chalk'
-import { sentenceCase } from 'sentence-case'
 import execa from 'execa'
+
+import { formatChangelogEntry } from './format-changelog-entry'
 
 const { log } = console
 
@@ -84,14 +85,7 @@ export const updateChangelog = async ({
     notes[category].commits.push(message)
   }
 
-  const releaseContent = Object.entries(notes)
-    .filter(([, { commits }]) => commits.length)
-    .map(([title, { commits }]) => {
-      const formattedTitle = `### ${sentenceCase(title)}\n\n`
-      const formattedCommits = '- ' + commits.join('\n- ').trim()
-      return formattedTitle + formattedCommits
-    })
-    .join('\n\n')
+  const releaseContent = formatChangelogEntry(notes)
 
   // TODO: make this more readable
   const parts = [`## ${version}`, ...(unreleased ? [] : [`_${date}_`]), releaseContent]
