@@ -27,8 +27,14 @@ export const updateChangelog = async ({
   const [date] = new Date().toISOString().split('T')
   const logPath = join(cwd, 'CHANGELOG.md')
 
+  let params = ['describe', '--tags', '--abbrev=0']
+  const { stdout: latestGitTag } = await execa('git', params, { cwd })
+  const latestVersion = latestGitTag.slice(1)
+
+  // TODO: refactor this
   const logFile = existsSync(logPath) ? readFileSync(logPath, 'utf-8') : ''
-  const oldNotes = logFile.startsWith(title) ? logFile.slice(title.length).trim() : logFile
+  const unreleasedSectionLength = logFile.split(`## ${latestVersion}`)[0].length
+  const oldNotes = logFile.startsWith(title) ? logFile.slice(unreleasedSectionLength) : logFile
 
   // TODO: load this from a external config
   const notes = {
@@ -55,7 +61,7 @@ export const updateChangelog = async ({
   // TODO: add flag to allow including all commit types
   const validCommitTypes = Object.values(notes).flatMap(({ prefix }) => prefix)
 
-  let params = ['rev-parse', 'HEAD']
+  params = ['rev-parse', 'HEAD']
   const { stdout: latestCommitHash } = await execa('git', params, { cwd })
 
   for (const { breaking, hash, header, type } of commits) {
