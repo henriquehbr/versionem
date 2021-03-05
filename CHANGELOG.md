@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.9.2
+
+_2021-03-05_
 
 ### Bugfixes
 
