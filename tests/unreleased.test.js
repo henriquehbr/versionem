@@ -7,6 +7,7 @@ import { dirname } from '../src/dirname'
 import { versionem } from '../src/index'
 import { generateExampleRepo } from './utils/generate-example-repo'
 import { commit } from './utils/commit'
+import { getCommitHash } from './utils/get-commit-hash'
 
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
@@ -25,11 +26,12 @@ it('--unreleased flag works properly', async () => {
   const [lastModified] = statSync(changelogPath).mtime.toISOString().split('T')
 
   writeFileSync(join(exampleRepoPath, 'lipsum.js'), 'console.log("Lipsum!")\n', 'utf-8')
-  const secondCommitHash = await commit('feat: lipsum', { cwd: exampleRepoPath })
+  await commit('feat: lipsum', { cwd: exampleRepoPath })
+  await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
+  const secondCommitHash = await getCommitHash({ cwd: exampleRepoPath })
 
   writeFileSync(join(exampleRepoPath, 'foobar.js'), 'console.log("foobar")\n', 'utf-8')
   await commit('fix: foobar', { cwd: exampleRepoPath })
-
   await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
 
   const changelogContent = readFileSync(changelogPath, 'utf-8')

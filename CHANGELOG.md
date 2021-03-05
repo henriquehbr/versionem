@@ -4,7 +4,7 @@
 
 ### Bugfixes
 
-- cleanup unreleased section to avoid duplication (HEAD)
+- cleanup unreleased section to avoid duplication (ca7d5d9)
 - amend changes on last commit when using --unreleased (544f2c6)
 - get bump flags from parameters instead `process.argv` (65b6d57)
 
