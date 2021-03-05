@@ -12,14 +12,22 @@
 
 yarn:
 
-```
+```bash
+# Local
 $ yarn add -D versionem
+
+# Global
+$ yarn global add versionem
 ```
 
 npm:
 
-```
+```bash
+# Local
 $ npm i -D versionem
+
+# Global
+$ npm i -g versionem
 ```
 
 ## Usage
@@ -58,3 +66,15 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
   - Regenerate all changelogs entries from scratch (overwriting existing ones), useful for existing codebases migrating to `versionem`
 - `--silent`
   - Don't output any log or message from the CLI (except from errors)
+
+## Tips
+
+- ### Including unreleased commits on changelog
+
+  For that, [Husky](https://github.com/typicode/husky) is essential, as in contrast to plain Git, it provides a clean and easy way to interact with Git hooks, and also, a special detail that makes it even more important for this to work, is that it allows to skip `post-commit` hook
+
+  After follow Husky [setup tutorial](https://typicode.github.io/husky/#/?id=install), add the `post-commit` hook by running the following command:
+
+  ```bash
+  $ yarn add .husky/pre-commit "versionem --unreleased"
+  ```
