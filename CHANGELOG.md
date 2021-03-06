@@ -4,7 +4,7 @@
 
 ### Features
 
-- add link on commit hashes ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- add link on commit hashes ([bef6038](https://github.com/henriquehbr/versionem/commit/bef6038))
 
 ### Updates
 
