@@ -9,13 +9,15 @@ import { getCommitHash } from './get-commit-hash'
  */
 
 /** @type {(msg: string, options: CommitOptions) => Promise<string>} */
-export const commit = async (msg, { cwd, files = '.' }) => {
+export const commit = async (msg, { cwd, files }) => {
   const execaConfig = { cwd }
 
-  let params = ['add', files]
-  await execa('git', params, execaConfig)
+  if (files) {
+    const params = ['add', files]
+    await execa('git', params, execaConfig)
+  }
 
-  params = ['commit', '-m', msg]
+  const params = ['commit', !files ? '--allow-empty' : '', '-m', msg]
   await execa('git', params, execaConfig)
 
   const hash = await getCommitHash({ cwd })
