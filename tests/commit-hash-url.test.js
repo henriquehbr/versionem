@@ -1,4 +1,4 @@
-import { writeFileSync, readFileSync, statSync } from 'fs'
+import { readFileSync, statSync } from 'fs'
 import { join } from 'path'
 
 import execa from 'execa'
@@ -15,20 +15,14 @@ const exampleRepoPath = join(__dirname, 'example-repo')
 it('properly fetch remote repo url for commit hash links', async () => {
   await generateExampleRepo()
 
-  writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
   const firstCommitHash = await commit('chore: hello world', { cwd: exampleRepoPath })
-
   await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
   let params = ['remote', 'add', 'origin', 'https://github.com/henriquehbr/versionem']
   await execa('git', params, { cwd: exampleRepoPath })
 
-  writeFileSync(join(exampleRepoPath, 'foobar.js'), 'console.log("foobar")\n', 'utf-8')
   const secondCommitHash = await commit('feat: foobar', { cwd: exampleRepoPath })
-
-  writeFileSync(join(exampleRepoPath, 'lipsum.js'), 'console.log("lorem ipsum")\n', 'utf-8')
   await commit('fix: lipsum', { cwd: exampleRepoPath })
-
   await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
 
   const changelogPath = join(exampleRepoPath, 'CHANGELOG.md')

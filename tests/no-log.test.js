@@ -1,4 +1,4 @@
-import { existsSync, writeFileSync } from 'fs'
+import { existsSync } from 'fs'
 import { join } from 'path'
 
 import { generateExampleRepo } from './utils/generate-example-repo'
@@ -11,14 +11,11 @@ const exampleRepoPath = join(__dirname, 'example-repo')
 
 it('--noLog flag works', async () => {
   await generateExampleRepo()
-
-  writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
-
-  await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
-
+  await commit('chore: hello world', { cwd: exampleRepoPath })
   await versionem({ cwd: exampleRepoPath, noLog: true, noPush: true, silent: true })
 
   const logPath = join(exampleRepoPath, 'CHANGELOG.md')
+  const changelogExists = existsSync(logPath)
 
-  expect(existsSync(logPath)).toBeFalsy()
+  expect(changelogExists).toBeFalsy()
 })

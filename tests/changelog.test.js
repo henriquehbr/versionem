@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, statSync } from 'fs'
+import { readFileSync, statSync } from 'fs'
 import { join } from 'path'
 
 import outdent from 'outdent'
@@ -13,11 +13,7 @@ const exampleRepoPath = join(__dirname, 'example-repo')
 
 it('Generates a single entry on "Updates" section', async () => {
   await generateExampleRepo()
-
-  writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
-
-  const commitHash = await commit('chore: add "Hello World!"', { cwd: exampleRepoPath })
-
+  const commitHash = await commit('chore: hello world', { cwd: exampleRepoPath })
   await versionem({ cwd: exampleRepoPath, noPush: true, silent: true })
 
   const changelogPath = join(exampleRepoPath, 'CHANGELOG.md')
@@ -36,7 +32,7 @@ it('Generates a single entry on "Updates" section', async () => {
 
     ### Updates
 
-    - add "Hello World!" (${commitHash})
+    - hello world (${commitHash})
   `
 
   expect(changelogContent).toBe(expectedChangelog)

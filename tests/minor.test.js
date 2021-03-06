@@ -1,4 +1,3 @@
-import { writeFileSync } from 'fs'
 import { join } from 'path'
 
 import execa from 'execa'
@@ -13,11 +12,7 @@ const exampleRepoPath = join(__dirname, 'example-repo')
 
 it('--minor works', async () => {
   await generateExampleRepo()
-
-  writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
-
   await commit('fix: hello world', { cwd: exampleRepoPath })
-
   await versionem({ cwd: exampleRepoPath, minor: true, noPush: true, silent: true })
 
   let params = ['describe', '--tags', '--abbrev=0']
