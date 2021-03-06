@@ -28,6 +28,7 @@ it('--unreleased flag works', async () => {
   writeFileSync(join(exampleRepoPath, 'lipsum.js'), 'console.log("Lipsum!")\n', 'utf-8')
   await commit('feat: lipsum', { cwd: exampleRepoPath })
   await versionem({ cwd: exampleRepoPath, unreleased: true, noPush: true, silent: true })
+  // Hash must be retrieved afterwards due to `git commit --amend` changing it
   const secondCommitHash = await getCommitHash({ cwd: exampleRepoPath })
 
   writeFileSync(join(exampleRepoPath, 'foobar.js'), 'console.log("foobar")\n', 'utf-8')
