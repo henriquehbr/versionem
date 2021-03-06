@@ -11,7 +11,7 @@ import { commit } from './utils/commit'
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-it('--noBump flag works properly', async () => {
+it('--noBump flag works', async () => {
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')

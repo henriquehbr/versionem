@@ -12,7 +12,7 @@ import { getCommitHash } from './utils/get-commit-hash'
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-it('--unreleased flag works properly', async () => {
+it('--unreleased flag works', async () => {
   await generateExampleRepo()
 
   const changelogPath = join(exampleRepoPath, 'CHANGELOG.md')

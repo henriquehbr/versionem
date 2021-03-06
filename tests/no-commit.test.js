@@ -10,7 +10,7 @@ import { getCommitHash } from './utils/get-commit-hash'
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-it('--noCommit flag works properly', async () => {
+it('--noCommit flag works', async () => {
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')

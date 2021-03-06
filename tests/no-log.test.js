@@ -9,7 +9,7 @@ import { commit } from './utils/commit'
 const __dirname = dirname(import.meta.url)
 const exampleRepoPath = join(__dirname, 'example-repo')
 
-it('--noLog flag works properly', async () => {
+it('--noLog flag works', async () => {
   await generateExampleRepo()
 
   writeFileSync(join(exampleRepoPath, 'index.js'), 'console.log("Hello World!")\n', 'utf-8')
