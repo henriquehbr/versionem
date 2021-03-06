@@ -28,16 +28,16 @@ it('Generates a single entry on "Updates" section', async () => {
   const [lastModified] = statSync(changelogPath).mtime.toISOString().split('T')
 
   const expectedChangelog = outdent`
-      # Changelog
+    # Changelog
 
-      ## 0.0.1
+    ## 0.0.1
 
-      _${lastModified}_
+    _${lastModified}_
 
-      ### Updates
+    ### Updates
 
-      - add "Hello World!" (${commitHash})
-    `
+    - add "Hello World!" (${commitHash})
+  `
 
   expect(changelogContent).toBe(expectedChangelog)
 })
