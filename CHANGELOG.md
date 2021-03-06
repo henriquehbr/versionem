@@ -2,10 +2,14 @@
 
 ## Unreleased
 
+### Features
+
+- add link on commit hashes ([bef6038](https://github.com/henriquehbr/versionem/commit/bef6038))
+
 ### Updates
 
-- modularize commit categorization and changelog formatting (HEAD)
-- modularize changelog entry formatter (86a98dd)
+- modularize commit categorization and changelog formatting ([a7eaedd](https://github.com/henriquehbr/versionem/commit/a7eaedd))
+- modularize changelog entry formatter ([86a98dd](https://github.com/henriquehbr/versionem/commit/86a98dd))
 
 ## 0.9.2
 
