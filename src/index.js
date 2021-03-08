@@ -7,7 +7,6 @@ import { pathToFileURL } from 'url'
 import chalk from 'chalk'
 
 import { getCommits } from './get-commits'
-import { parseCommits } from './parse-commits'
 import { getNewVersion } from './get-new-version'
 import { updatePackage } from './update-package'
 import { updateChangelog } from './update-changelog'
@@ -22,7 +21,7 @@ const { log } = console
 
 export const versionem = async options => {
   const parsedOptions = await parseOptions(options)
-  const { dryRun, regenChangelog, unreleased, publish, silent, packageName, cwd } = parsedOptions
+  const { dryRun, regenChangelog, publish, silent, packageName, cwd } = parsedOptions
 
   // FIXME: Problematic on Windows, requires `pathToFileURL`
   const { default: packageJson } = await import(pathToFileURL(join(cwd, 'package.json')))
@@ -33,17 +32,7 @@ export const versionem = async options => {
 
   !silent && log(chalk`{cyan Releasing \`${packageName}\`}`)
 
-  const unparsedCommits = await getCommits({ packageName: packageName, ...parsedOptions })
-
-  if (!unparsedCommits.length)
-    throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
-
-  const commits = parseCommits({ unparsedCommits, ...parsedOptions })
-
-  if (!commits.length)
-    throw new Error(
-      chalk`\n{yellow No eligible commits found!} are you following a commit naming standard?`
-    )
+  const commits = await getCommits({ packageName: packageName, ...parsedOptions })
 
   !silent && log(chalk`{blue Found} {bold ${commits.length}} commits`)
 

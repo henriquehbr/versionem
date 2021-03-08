@@ -8,7 +8,8 @@
 
 ### Updates
 
-- skip versioning step on unreleased mode ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- unify commit fetching and parsing ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- skip versioning step on unreleased mode ([3c28725](https://github.com/henriquehbr/versionem/commit/3c28725))
 - remove commit type validation from categorization step ([1629b60](https://github.com/henriquehbr/versionem/commit/1629b60))
 - warn when releasing only unknown commit types ([f0a9a0a](https://github.com/henriquehbr/versionem/commit/f0a9a0a))
 

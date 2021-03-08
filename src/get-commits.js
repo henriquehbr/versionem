@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import execa from 'execa'
 
 import { getTags } from './get-tags'
+import { parseCommits } from './parse-commits'
 
 const { log } = console
 
@@ -21,5 +22,15 @@ export const getCommits = async ({ cwd, packageName, originTag, silent }) => {
   let params = ['--no-pager', 'log', `${fromTag}..${toTag}`, '--format=%B%n-hash-%n%H🐒💨🙊']
   const { stdout: unparsedCommits } = await execa('git', params, { cwd })
 
-  return unparsedCommits
+  if (!unparsedCommits.length)
+    throw new Error(chalk`\n{red No commits found!} did you mean to publish ${packageName}?`)
+
+  const parsedCommits = parseCommits({ cwd, unparsedCommits })
+
+  if (!parsedCommits.length)
+    throw new Error(
+      chalk`\n{yellow No eligible commits found!} are you following a commit naming standard?`
+    )
+
+  return parsedCommits
 }
