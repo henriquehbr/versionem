@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Updates
+
+- modularize commit parsing ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+
 ## 0.10.0
 
 _2021-03-06_

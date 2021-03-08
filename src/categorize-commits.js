@@ -1,31 +1,10 @@
 import execa from 'execa'
 
+import { categoriesMetadata, validCommitTypes } from './categories-metadata'
 import { getRemoteUrl } from './get-remote-url'
 
 export const categorizeCommits = async ({ cwd, packageName, commits, unreleased }) => {
-  const commitCategories = {
-    unreleased: {
-      commits: []
-    },
-    breakingChanges: {
-      commits: []
-    },
-    features: {
-      prefix: 'feat',
-      commits: []
-    },
-    bugfixes: {
-      prefix: 'fix',
-      commits: []
-    },
-    updates: {
-      prefix: ['chore', 'refactor'],
-      commits: []
-    }
-  }
-
-  // TODO: add flag to allow including all commit types
-  const validCommitTypes = Object.values(commitCategories).flatMap(({ prefix }) => prefix)
+  const commitCategories = JSON.parse(JSON.stringify(categoriesMetadata))
 
   let params = ['rev-parse', 'HEAD']
   const { stdout: latestCommitHash } = await execa('git', params, { cwd })
@@ -51,5 +30,6 @@ export const categorizeCommits = async ({ cwd, packageName, commits, unreleased 
     const category = breaking || categoryName || 'updates'
     commitCategories[category].commits.push(message)
   }
+
   return commitCategories
 }

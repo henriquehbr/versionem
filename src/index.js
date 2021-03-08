@@ -7,6 +7,7 @@ import { pathToFileURL } from 'url'
 import chalk from 'chalk'
 
 import { getCommits } from './get-commits'
+import { parseCommits } from './parse-commits'
 import { getNewVersion } from './get-new-version'
 import { updatePackage } from './update-package'
 import { updateChangelog } from './update-changelog'
@@ -33,7 +34,8 @@ export const versionem = async options => {
 
     !silent && log(chalk`{cyan Releasing \`${packageName}\`}`)
 
-    const commits = await getCommits({ packageName: packageName, ...parsedOptions })
+    const unparsedCommits = await getCommits({ packageName: packageName, ...parsedOptions })
+    const commits = parseCommits({ unparsedCommits, ...parsedOptions })
 
     if (!commits.length)
       throw chalk`\n{red No commits found!} did you mean to publish ${packageName}?`
