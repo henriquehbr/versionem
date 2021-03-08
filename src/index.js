@@ -47,9 +47,7 @@ export const versionem = async options => {
 
   !silent && log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
-  const newVersion = unreleased
-    ? 'Unreleased'
-    : getNewVersion({ version: packageJson.version, commits, ...parsedOptions })
+  const newVersion = getNewVersion({ version: packageJson.version, commits, ...parsedOptions })
 
   !silent && log(chalk`{blue New version}: ${newVersion}\n`)
 

@@ -33,6 +33,7 @@ export const updateChangelog = async ({
   const oldNotes = logFile.startsWith(title) ? logFile.slice(unreleasedSectionLength) : logFile
 
   const categorizedCommits = await categorizeCommits({ cwd, packageName, commits, unreleased })
+
   const formattedChangelogEntry = formatChangelogEntry({ unreleased, version, categorizedCommits })
 
   if (dryRun || noLog) {

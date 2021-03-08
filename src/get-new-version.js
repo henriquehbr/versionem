@@ -4,7 +4,12 @@ import semver from 'semver'
 const { log } = console
 
 /** @type {import('../types/generic').Generic} */
-export const getNewVersion = ({ version, major, minor, patch, commits, silent }) => {
+export const getNewVersion = ({ version, unreleased, major, minor, patch, commits, silent }) => {
+  if (unreleased) {
+    !silent && log(chalk`{yellow Skipping versioning}`)
+    return
+  }
+
   !silent && log(chalk`{blue Determining new version}`)
 
   const increment = major ? 'major' : minor ? 'minor' : patch && 'patch'

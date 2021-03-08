@@ -19,10 +19,10 @@ export const formatChangelogEntry = ({ unreleased, version, categorizedCommits }
 
   if (!unreleased) {
     const [date] = new Date().toISOString().split('T')
-    formattedChangelogEntry.unshift(`_${date}_`)
+    formattedChangelogEntry.unshift(`## ${version}`, `_${date}_`)
+  } else {
+    formattedChangelogEntry.unshift('## Unreleased')
   }
-
-  formattedChangelogEntry.unshift(`## ${version}`)
 
   // Divide sections with a line break
   return formattedChangelogEntry.join('\n\n')

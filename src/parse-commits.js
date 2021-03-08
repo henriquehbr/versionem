@@ -15,6 +15,8 @@ export const parseCommits = ({ cwd, unparsedCommits }) => {
   const isBreakingChangeRegex = new RegExp(`(${parserOptions.noteKeywords.join(')|(')})`)
   const commitTypesRegex = validCommitTypes.join('|')
   const commitSubjectRegex = isMonorepoPackage ? `\\(${packageName}\\)` : ''
+
+  // Prevent the inclusion of commits without types (eg: merge commits)
   const commitRegex = new RegExp(`^(${commitTypesRegex})!?${commitSubjectRegex}`, 'i')
 
   const parsedCommits = unparsedCommits
