@@ -1,6 +1,6 @@
 {
   "name": "versionem",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "types": "./types/index.d.ts",
   "description": "Automated semantic versioning integrated to changelog generation",
   "keywords": [

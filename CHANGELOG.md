@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.10.1
+
+_2021-03-08_
 
 ### Bugfixes
 
@@ -8,14 +10,14 @@
 
 ### Updates
 
-- unify commit fetching and parsing ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- unify commit fetching and parsing ([9cc37d4](https://github.com/henriquehbr/versionem/commit/9cc37d4))
 - skip versioning step on unreleased mode ([3c28725](https://github.com/henriquehbr/versionem/commit/3c28725))
 - remove commit type validation from categorization step ([1629b60](https://github.com/henriquehbr/versionem/commit/1629b60))
 - warn when releasing only unknown commit types ([f0a9a0a](https://github.com/henriquehbr/versionem/commit/f0a9a0a))
 
 ## 0.10.0
 
-_2021-03-06_
+_2021-03-08_
 
 ### Features
 
@@ -25,18 +27,3 @@ _2021-03-06_
 
 - modularize commit categorization and changelog formatting ([a7eaedd](https://github.com/henriquehbr/versionem/commit/a7eaedd))
 - modularize changelog entry formatter ([86a98dd](https://github.com/henriquehbr/versionem/commit/86a98dd))
-
-## 0.9.2
-
-_2021-03-06_
-
-### Bugfixes
-
-- cleanup unreleased section to avoid duplication ([ca7d5d9](https://github.com/henriquehbr/versionem/commit/ca7d5d9))
-- amend changes on last commit when using --unreleased ([544f2c6](https://github.com/henriquehbr/versionem/commit/544f2c6))
-- get bump flags from parameters instead `process.argv` ([65b6d57](https://github.com/henriquehbr/versionem/commit/65b6d57))
-
-### Updates
-
-- tag latest commit as HEAD instead it's hash ([2e6f3f2](https://github.com/henriquehbr/versionem/commit/2e6f3f2))
-- include unreleased commits on changelog ([5da5c57](https://github.com/henriquehbr/versionem/commit/5da5c57))
