@@ -2,10 +2,14 @@
 
 ## Unreleased
 
+### Bugfixes
+
+- prevent changelog generation without known commit types ([f7eed3a](https://github.com/henriquehbr/versionem/commit/f7eed3a))
+
 ### Updates
 
-- warn when releasing only unknown commit types ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
-- modularize commit parsing ([0c55503](https://github.com/henriquehbr/versionem/commit/0c55503))
+- remove commit type validation from categorization step ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- warn when releasing only unknown commit types ([f0a9a0a](https://github.com/henriquehbr/versionem/commit/f0a9a0a))
 
 ## 0.10.0
 
