@@ -4,7 +4,8 @@
 
 ### Updates
 
-- modularize commit parsing ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- warn when releasing only unknown commit types ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- modularize commit parsing ([0c55503](https://github.com/henriquehbr/versionem/commit/0c55503))
 
 ## 0.10.0
 
