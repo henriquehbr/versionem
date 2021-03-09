@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Bugfixes
+
+- properly include previous versions when regenerating changelog ([f205b74](https://github.com/henriquehbr/versionem/commit/f205b74))
+
 ## 0.10.1
 
 _2021-03-08_

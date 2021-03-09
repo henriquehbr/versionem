@@ -15,6 +15,7 @@ export const updateChangelog = async ({
   cwd,
   unreleased,
   packageName,
+  previousVersion,
   version,
   dryRun,
   noLog,
@@ -29,7 +30,7 @@ export const updateChangelog = async ({
   const { version: latestVersion } = await readPkg({ cwd, normalize: false })
 
   const logFile = existsSync(logPath) ? readFileSync(logPath, 'utf-8') : ''
-  const unreleasedSectionLength = logFile.split(`## ${latestVersion}`)[0].length
+  const unreleasedSectionLength = logFile.split(`## ${previousVersion || latestVersion}`)[0].length
   const oldNotes = logFile.startsWith(title) ? logFile.slice(unreleasedSectionLength) : logFile
 
   const categorizedCommits = await categorizeCommits({ cwd, packageName, commits, unreleased })
