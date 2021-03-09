@@ -4,7 +4,7 @@
 
 ### Bugfixes
 
-- properly include previous versions when regenerating changelog ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- properly include previous versions when regenerating changelog ([f205b74](https://github.com/henriquehbr/versionem/commit/f205b74))
 
 ## 0.10.1
 
