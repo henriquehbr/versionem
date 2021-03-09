@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Bugfixes
+
+- properly include previous versions when regenerating changelog ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+
 ## 0.10.1
 
 _2021-03-08_

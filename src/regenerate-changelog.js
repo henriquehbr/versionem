@@ -24,11 +24,20 @@ export const regenerateChangelog = async ({ cwd, packageName, silent, dryRun }) 
   for (let [i, tag] of tags.entries()) {
     const toTag = tags[i + 1]
     if (!toTag) break
-    const [, version] = toTag.split('v')
+    const previousVersion = tag.slice(1)
+    const version = toTag.slice(1)
     const commits = await getCommits({ cwd, packageName, originTag: tag, silent })
 
     !silent && log(chalk`{blue Found} {bold ${commits.length}} commits`)
 
-    updateChangelog({ commits, cwd, packageName, version, dryRun, silent })
+    await updateChangelog({
+      commits,
+      cwd,
+      packageName,
+      previousVersion,
+      version,
+      dryRun,
+      silent
+    })
   }
 }

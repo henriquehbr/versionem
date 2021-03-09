@@ -25,7 +25,7 @@ export const categorizeCommits = async ({ cwd, packageName, commits, unreleased 
     const getCategoryByPrefix = ([, { prefix }]) => prefix?.includes(type) || prefix === type
     const [categoryName] = Object.entries(commitCategories).filter(getCategoryByPrefix).flat()
     // TODO: review `breaking` usage below
-    const category = breaking || categoryName || 'updates'
+    const category = (breaking && 'breakingChanges') || categoryName || 'updates'
     commitCategories[category].commits.push(message)
   }
 
