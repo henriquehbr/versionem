@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.10.4
+
+_2021-03-14_
 
 ### Bugfixes
 
-- set node as script interpreter through shebang ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- set node as script interpreter through shebang ([d780803](https://github.com/henriquehbr/versionem/commit/d780803))
 
 ### Updates
 
