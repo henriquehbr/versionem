@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Bugfixes
+
+- set node as script interpreter through shebang ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+
+### Updates
+
+- add MIT license ([a00d004](https://github.com/henriquehbr/versionem/commit/a00d004))
+
 ## 0.10.3
 
 _2021-03-14_
