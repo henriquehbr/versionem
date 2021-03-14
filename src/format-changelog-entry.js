@@ -1,7 +1,17 @@
 import outdent from 'outdent'
 import { sentenceCase } from 'sentence-case'
 
-export const formatChangelogEntry = ({ unreleased, version, categorizedCommits }) => {
+import { getTags } from './get-tags'
+
+import execa from 'execa'
+
+export const formatChangelogEntry = async ({
+  cwd,
+  unreleased,
+  packageName,
+  version,
+  categorizedCommits
+}) => {
   const formattedChangelogEntry = []
 
   for (const category in categorizedCommits) {
@@ -18,7 +28,18 @@ export const formatChangelogEntry = ({ unreleased, version, categorizedCommits }
   }
 
   if (!unreleased) {
-    const [date] = new Date().toISOString().split('T')
+    let date = ''
+
+    const [versionTag] = await getTags({ tag: 'v' + version, cwd, packageName })
+
+    if (versionTag) {
+      let params = ['show', '-s', '--format=%cs', versionTag]
+      const { stdout: releaseDate } = await execa('git', params, { cwd })
+      date = releaseDate
+    } else {
+      const [releaseDate] = new Date().toISOString().split('T')
+      date = releaseDate
+    }
     formattedChangelogEntry.unshift(`## ${version}`, `_${date}_`)
   } else {
     formattedChangelogEntry.unshift('## Unreleased')

@@ -35,7 +35,14 @@ export const updateChangelog = async ({
 
   const categorizedCommits = await categorizeCommits({ cwd, packageName, commits, unreleased })
 
-  const formattedChangelogEntry = formatChangelogEntry({ unreleased, version, categorizedCommits })
+  const formattedChangelogEntry = await formatChangelogEntry({
+    cwd,
+    unreleased,
+    previousVersion,
+    packageName,
+    version,
+    categorizedCommits
+  })
 
   if (dryRun || noLog) {
     !silent && log(chalk`{blue New changelog}:\n${formattedChangelogEntry}`)

@@ -10,7 +10,7 @@ import { getCommits } from './get-commits'
 import { updateChangelog } from './update-changelog'
 
 /** @type {import('../types/generic').Generic} */
-export const regenerateChangelog = async ({ cwd, packageName, silent, dryRun }) => {
+export const regenerateChangelog = async ({ cwd, regenChangelog, packageName, silent, dryRun }) => {
   !silent && log(chalk`{magenta REGENERATE:} Changelog will be generated from scratch`)
 
   const tags = await getTags({ cwd, packageName })
@@ -34,6 +34,7 @@ export const regenerateChangelog = async ({ cwd, packageName, silent, dryRun }) 
       commits,
       cwd,
       packageName,
+      regenChangelog,
       previousVersion,
       version,
       dryRun,

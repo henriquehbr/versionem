@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Bugfixes
+
+- avoid overriding release dates on --regenChangelog ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+
 ## 0.10.2
 
 _2021-03-09_
