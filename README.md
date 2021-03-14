@@ -7,6 +7,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Options](#options)
+- [Tips](#tips)
 
 ## Installation
 
