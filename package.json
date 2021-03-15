@@ -38,6 +38,7 @@
     "execa": "^5.0.0",
     "minimist": "^1.2.5",
     "outdent": "^0.8.0",
+    "proposal-temporal": "^0.7.0",
     "semver": "^7.3.4",
     "sentence-case": "^3.0.4",
     "write-pkg": "^4.0.0"

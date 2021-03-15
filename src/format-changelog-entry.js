@@ -1,5 +1,6 @@
 import outdent from 'outdent'
 import { sentenceCase } from 'sentence-case'
+import { Temporal } from 'proposal-temporal'
 
 import { getTags } from './get-tags'
 
@@ -37,7 +38,7 @@ export const formatChangelogEntry = async ({
       const { stdout: releaseDate } = await execa('git', params, { cwd })
       date = releaseDate
     } else {
-      const [releaseDate] = new Date().toISOString().split('T')
+      const releaseDate = Temporal.now.plainDateISO().toString()
       date = releaseDate
     }
     formattedChangelogEntry.unshift(`## ${version}`, `_${date}_`)

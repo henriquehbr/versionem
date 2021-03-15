@@ -2,6 +2,7 @@ import { readFileSync, statSync } from 'fs'
 import { join } from 'path'
 
 import outdent from 'outdent'
+import { Temporal } from 'proposal-temporal'
 
 import { generateExampleRepo } from './utils/generate-example-repo'
 import { dirname } from '../src/dirname'
@@ -38,7 +39,8 @@ it('--regenChangelog flag works', async () => {
   /* Use last modified time instead actual date to avoid possible 1% edge cases conflicts where
     the changelog is generated exactly 23:59 and the tests are run at 00:00 */
   // FIXME: return "lastModified" from API (inside object)
-  const [lastModified] = statSync(changelogPath).mtime.toISOString().split('T')
+  const lastModifiedTimestamp = statSync(changelogPath).mtime.toISOString()
+  const lastModified = Temporal.PlainDate.from(lastModifiedTimestamp).toString()
 
   const changelogContent = readFileSync(changelogPath, 'utf-8')
 
