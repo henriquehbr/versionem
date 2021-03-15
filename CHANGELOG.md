@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.10.5
+
+_2021-03-15_
 
 ### Bugfixes
 
-- get locale time instead iso time on releases ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- get locale time instead iso time on releases ([ade0331](https://github.com/henriquehbr/versionem/commit/ade0331))
 
 ## 0.10.4
 
