@@ -55,6 +55,8 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
   - Includes to changelog commits created before a release (implicitly includes both `--noCommit` and `--noBump`)
 - `--force`
   - Force release even when there aren't eligible commits
+- `--releasePlaceholder`
+  - Use a custom message for releases that doesn't contain eligible commits
 - `--noPush`
   - Prevent pushing to remote after release
 - `--noCommit`
