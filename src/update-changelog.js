@@ -15,6 +15,7 @@ export const updateChangelog = async ({
   cwd,
   unreleased,
   packageName,
+  releasePlaceholder,
   previousVersion,
   version,
   dryRun,
@@ -38,6 +39,7 @@ export const updateChangelog = async ({
   const formattedChangelogEntry = await formatChangelogEntry({
     cwd,
     unreleased,
+    releasePlaceholder,
     previousVersion,
     packageName,
     version,

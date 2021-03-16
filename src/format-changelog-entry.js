@@ -9,6 +9,7 @@ import execa from 'execa'
 export const formatChangelogEntry = async ({
   cwd,
   unreleased,
+  releasePlaceholder,
   packageName,
   version,
   categorizedCommits
@@ -30,7 +31,9 @@ export const formatChangelogEntry = async ({
 
   !formattedChangelogEntry.length &&
     formattedChangelogEntry.push(
-      '- Only refactorings and dev-only changes were made on this release'
+      `- ${
+        releasePlaceholder || 'Only refactorings and dev-only changes were made on this release'
+      }`
     )
 
   if (!unreleased) {
