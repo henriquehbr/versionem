@@ -4,10 +4,30 @@
 
 ## Summary
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Options](#options)
-- [Tips](#tips)
+- [versionem](#versionem)
+  - [Summary](#summary)
+  - [Why?](#why)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Options](#options)
+  - [Tips](#tips)
+
+## Why?
+
+The changelog generation topic certainly has been around for a while, and for sure Node.js ecosystem wouldn't be outside of this, so why choose `versionem` (a.k.a the new kid on the block), over other already well-known and trusted tools
+
+> **Note:** not all points listed on the table below might be of your interest, that's just my personal perspective on things, and why `versionem` should be considered as a valid competitor to this scenario, instead of just another wheel reinvention
+
+|                                 | versionem | [`semantic-release`](https://github.com/semantic-release/semantic-release) | [`standard-version`](https://github.com/conventional-changelog/standard-version) | [`releasy`](https://github.com/vtex/releasy) |
+| ------------------------------- | --------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------- |
+| Changelog generation            | ✔️         | ✔️                                                                          | ✔️                                                                                | ✔️                                            |
+| Automated semantic version bump | ✔️         | ✔️                                                                          | ✔️                                                                                | ❌                                            |
+| Changelog regeneration          | ✔️         | ✔️                                                                          | ❌                                                                                | ❓[¹]                                         |
+| CI independent                  | ✔️         | ❌                                                                          | ✔️                                                                                | ✔️                                            |
+| GitHub Releases                 | ❌         | ✔️                                                                          | ⚠️[²]                                                                             | ✔️                                            |
+
+1. Couldn't get it to work, returned: `[ERROR] Failed to release`, no issues in regard to this problem were found on the repository
+2. Requires [`conventional-github-releaser`](https://github.com/conventional-changelog/releaser-tools/tree/master/packages/conventional-github-releaser)
 
 ## Installation
 
