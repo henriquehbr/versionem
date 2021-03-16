@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.12.0
+
+_2021-03-16_
 
 ### Features
 
-- add --releasePlaceholder flag ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- add --releasePlaceholder flag ([3b8cf40](https://github.com/henriquehbr/versionem/commit/3b8cf40))
 
 ## 0.11.0
 
