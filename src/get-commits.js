@@ -7,7 +7,7 @@ import { parseCommits } from './parse-commits'
 const { log } = console
 
 /** @type {import('../types/generic').Generic} */
-export const getCommits = async ({ cwd, packageName, originTag, silent }) => {
+export const getCommits = async ({ cwd, force, packageName, originTag, silent }) => {
   const tags = await getTags({ cwd, packageName })
 
   const fromTag = originTag || tags.pop()
@@ -27,7 +27,7 @@ export const getCommits = async ({ cwd, packageName, originTag, silent }) => {
 
   const parsedCommits = parseCommits({ cwd, unparsedCommits })
 
-  if (!parsedCommits.length)
+  if (!parsedCommits.length && !force)
     throw new Error(
       chalk`\n{yellow No eligible commits found!} are you following a commit naming standard?`
     )

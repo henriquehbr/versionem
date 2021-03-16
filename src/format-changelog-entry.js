@@ -28,6 +28,11 @@ export const formatChangelogEntry = async ({
     formattedChangelogEntry.push(formattedNote)
   }
 
+  !formattedChangelogEntry.length &&
+    formattedChangelogEntry.push(
+      '- Only refactorings and dev-only changes were made on this release'
+    )
+
   if (!unreleased) {
     let date = ''
 

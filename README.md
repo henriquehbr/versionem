@@ -53,6 +53,8 @@ versionem [path] [--dryRun] [--noPush] [--noTag] [--regenChangelog] [--silent]
   - Run the whole release process without making a single modification to existing files nor creating new ones
 - `--unreleased`
   - Includes to changelog commits created before a release (implicitly includes both `--noCommit` and `--noBump`)
+- `--force`
+  - Force release even when there aren't eligible commits
 - `--noPush`
   - Prevent pushing to remote after release
 - `--noCommit`

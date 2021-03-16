@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- add --force flag ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+
 ## 0.10.5
 
 _2021-03-15_
