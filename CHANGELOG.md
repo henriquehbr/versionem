@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.12.1
+
+_2021-03-17_
 
 ### Bugfixes
 
-- use node resolution algorithm for interpreting import paths ([HEAD](https://github.com/henriquehbr/versionem/commit/HEAD))
+- use node resolution algorithm for interpreting import paths ([7c9525b](https://github.com/henriquehbr/versionem/commit/7c9525b))
 
 ## 0.12.0
 
