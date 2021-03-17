@@ -24,7 +24,7 @@ The changelog generation topic certainly has been around for a while, and for su
 | Automated semantic version bump | ✔️         | ✔️                                                                          | ✔️                                                                                | ❌                                            |
 | Manual version bump             | ✔️         | ❌                                                                          | ✔️                                                                                | ✔️                                            |
 | Changelog regeneration          | ✔️         | ✔️                                                                          | ❌                                                                                | ❓[¹]                                         |
-| CI independent                  | ✔️         | ❌                                                                          | ✔️                                                                                | ✔️                                            |
+| CI integration                  | ❌         | ✔️                                                                          | ❌                                                                                | ❌                                            |
 | GitHub Releases                 | ❌         | ✔️                                                                          | ⚠️[²]                                                                             | ✔️                                            |
 
 1. Couldn't get it to work, returned: `[ERROR] Failed to release`, no issues in regard to this problem were found on the repository
