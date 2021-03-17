@@ -1,4 +1,6 @@
-#!/usr/bin/env node
+#!/bin/sh
+':' //# comment; exec /usr/bin/env node --experimental-specifier-resolution=node "$0" "$@"
+
 import minimist from 'minimist'
 
 import { versionem } from './index'
